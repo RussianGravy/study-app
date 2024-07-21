@@ -4,6 +4,7 @@ import { useState } from "react";
 import { auth, googleProvider } from "../config/firebase.js";
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signInWithRedirect,
   signOut,
 } from "firebase/auth";
@@ -16,7 +17,11 @@ export default function Auth() {
       await createUserWithEmailAndPassword(auth, email, password);
       // await redirect();
     } catch (err) {
-      console.error(err);
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
   const signInWithGoogle = async () => {
@@ -35,9 +40,9 @@ export default function Auth() {
     }
   };
   // async function redirect () {window.location.href = '/homepage';}
-  console.log(auth?.currentUser?.email);
+  //console.log("auth: " + auth?.currentUser?.email);
   return (
-    <div className="h-max flex flex-col">
+    <div className="h-max flex flex-col bg-slate-300 px-8 py-3 rounded-lg">
       <input
         className="my-3 outline"
         type="email"
@@ -57,7 +62,7 @@ export default function Auth() {
       <button className="my-3 bg-blue-400 outline h-full" onClick={signIn}>
         Sign In
       </button>
-      <button className="my-3 bg-gray-300 outline" onClick={signInWithGoogle}>
+      <button className="my-3 bg-gray-200 outline" onClick={signInWithGoogle}>
         Sign In With Google
       </button>
       <button className="my-3 bg-gray-300 outline" onClick={logOut}>
