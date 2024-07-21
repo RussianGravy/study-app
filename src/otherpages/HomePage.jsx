@@ -19,7 +19,6 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
-import { useAuth } from "../components/useAuth.jsx";
 
 export function HomePage() {
   const [cardList, setCardList] = useState([]);
@@ -41,13 +40,6 @@ export function HomePage() {
   useEffect(() => {
     getCardList();
   }, []);
-
-  const user = useAuth();
-  console.log("user is " + user);
-  // const navigate = useNavigate();
-  // if (user) {
-  //   navigate("/");
-  // }
 
   const submitCard = async () => {
     try {
