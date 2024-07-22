@@ -3,14 +3,17 @@ import { getAnalytics } from "firebase/analytics"; //not talked about in video
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"; 
 
+
+console.log('wtf ' + process.env.REACT_APP_FIREBASE_API_KEY);
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAG1m3hv3BEl0JCS9J98uQWE4lRtktu3xA",
-  authDomain: "flashcards-12619.firebaseapp.com",
-  projectId: "flashcards-12619",
-  storageBucket: "flashcards-12619.appspot.com",
-  messagingSenderId: "876096607819",
-  appId: "1:876096607819:web:101dfbe94c8415c56a5fce",
-  measurementId: "G-WGGHJQ91DZ"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENSOR_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
