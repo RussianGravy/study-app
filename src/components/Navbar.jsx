@@ -13,7 +13,9 @@ export function Navbar() {
   return (
     <div className="w-screen h-fit flex flex-row bg-gray-400 fixed z-40">
       <div className="flex grow items-center">
-        <h1 className="w-fit mx-5 text-2xl items-center">nothing</h1>
+        <h1 className="w-fit mx-5 text-2xl items-center">
+          {auth.currentUser?.email && "nothing"}
+        </h1>
       </div>
       <button
         onClick={logOut}

@@ -43,7 +43,7 @@ export function HomePage() {
   }, []);
 
   const user = useAuth();
-  console.log("user is " + user);
+  console.log("Homepage: user is " + user);
   // const navigate = useNavigate();
   // if (user) {
   //   navigate("/");
