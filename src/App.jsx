@@ -5,17 +5,29 @@ import { LoginPage } from "./otherpages/LoginPage.jsx";
 import { HomePage } from "./otherpages/HomePage.jsx";
 import { auth, googleProvider, db } from "./config/firebase.js";
 //temp
-import { SignUp } from "./src/components/SignUp.jsx";
+import { SignUp } from "./components/SignUp.jsx";
+import { Container } from "react-bootstrap";
+import { AuthProvider } from "./contexts/AuthContext.js";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<SignUp />} />
-        {/* <Route index element={<LoginPage />} />
-        <Route path="/homepage" element={<HomePage />} /> */}
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <Container
+        className="d-flex align-items-center justify-height-center"
+        style={{ minHeight: "100vh" }}
+      >
+        <div style={{ maxWidth: "400px", width: "100%" }}>
+          <SignUp></SignUp>
+        </div>
+      </Container>
+    </AuthProvider>
+
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route index element={<LoginPage />} />
+    //     <Route path="/homepage" element={<HomePage />} />
+    //   </Routes>
+    // </BrowserRouter>
   );
 }
 

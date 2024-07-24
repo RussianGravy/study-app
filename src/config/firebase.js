@@ -3,9 +3,6 @@ import { getAnalytics } from "firebase/analytics"; //not talked about in video
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"; 
 
-
-console.log('wtf ' + process.env.REACT_APP_FIREBASE_API_KEY);
-
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,

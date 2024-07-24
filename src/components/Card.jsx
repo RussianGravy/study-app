@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { useState } from "react";
-import "./test.css";
 import { get } from "firebase/database";
 
 export function Card({ topic, content, deleteFunction, updateFunction }) {
