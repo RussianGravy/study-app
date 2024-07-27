@@ -2,6 +2,7 @@ import { React, useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext.js";
 import { Link, useNavigate } from "react-router-dom";
+import ForgotPassowrd from "../otherpages/ForgotPassword.jsx";
 
 export function LogIn() {
   const emailRef = useRef(" ");
@@ -46,6 +47,12 @@ export function LogIn() {
             <Button className="w-100" type="submit">
               Log In
             </Button>
+            <div className="w-100 text-center mt-2">
+              <Link className="text-blue-700" to="/forgot-password">
+                {" "}
+                Reset Password?
+              </Link>
+            </div>
           </Form>
         </Card.Body>
       </Card>

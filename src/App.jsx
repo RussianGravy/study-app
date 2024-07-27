@@ -12,6 +12,7 @@ import { Container } from "react-bootstrap";
 import { AuthProvider } from "./contexts/AuthContext.js";
 import { PrivateRoute } from "./components/PrivateRoute.js";
 import ForgotPassword from "./otherpages/ForgotPassword.jsx";
+import UpdateProfile from "./otherpages/UpdateProfile.jsx";
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
               />
               <Route path="/signup" Component={SignUp} />
               <Route path="/login" Component={LogIn} />
-              <Route path="/forgot-pasword" Component={ForgotPassword} />
+              <Route path="/forgot-password" Component={ForgotPassword} />
+              <Route path="/update-profile" Component={UpdateProfile} />
             </Routes>
           </AuthProvider>
         </BrowserRouter>
