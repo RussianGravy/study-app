@@ -62,9 +62,9 @@ export default function Auth() {
       <button className="my-3 bg-blue-400 outline h-full" onClick={signIn}>
         Sign In
       </button>
-      <button className="my-3 bg-gray-200 outline" onClick={signInWithGoogle}>
+      {/* <button className="my-3 bg-gray-200 outline" onClick={signInWithGoogle}>
         Sign In With Google
-      </button>
+      </button> */}
       <button className="my-3 bg-gray-300 outline" onClick={logOut}>
         Sign Out
       </button>
