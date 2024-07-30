@@ -3,16 +3,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { LoginPage } from "./otherpages/LoginPage.jsx";
 import { HomePage } from "./otherpages/HomePage.jsx";
+import { SignUpPage } from "./otherpages/SignUpPage.jsx";
 import { auth, googleProvider, db } from "./config/firebase.js";
 //temp
-import { SignUp } from "./components/SignUp.jsx";
-import { Dashboard } from "./components/Dashboard.jsx";
-import { LogIn } from "./components/LogIn.jsx";
 import { Container } from "react-bootstrap";
 import { AuthProvider } from "./contexts/AuthContext.js";
 import { PrivateRoute } from "./components/PrivateRoute.js";
 import ForgotPassword from "./otherpages/ForgotPassword.jsx";
-import UpdateProfile from "./otherpages/UpdateProfile.jsx";
 
 function App() {
   return (
@@ -27,12 +24,11 @@ function App() {
               <Route
                 exact
                 path="/"
-                element={<PrivateRoute Component={Dashboard} />}
+                element={<PrivateRoute Component={HomePage} />}
               />
-              <Route path="/signup" Component={SignUp} />
-              <Route path="/login" Component={LogIn} />
+              <Route path="/signup" Component={SignUpPage} />
+              <Route path="/login" Component={LoginPage} />
               <Route path="/forgot-password" Component={ForgotPassword} />
-              <Route path="/update-profile" Component={UpdateProfile} />
             </Routes>
           </AuthProvider>
         </BrowserRouter>

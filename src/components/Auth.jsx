@@ -1,73 +1,56 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { auth, googleProvider } from "../config/firebase.js";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithRedirect,
-  signOut,
-} from "firebase/auth";
+import { useAuth } from "../contexts/AuthContext.js";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const signIn = async () => {
+  const navigate = useNavigate();
+  const temp = useAuth();
+  async function handleSubmit() {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      // await redirect();
-    } catch (err) {
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  };
-  const signInWithGoogle = async () => {
-    try {
-      await signInWithRedirect(auth, googleProvider);
-      // await redirect();
+      await temp.logIn(email, password);
     } catch (err) {
       console.error(err);
+      return;
     }
-  };
-  const logOut = async () => {
-    try {
-      await signOut(auth);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  // async function redirect () {window.location.href = '/homepage';}
-  //console.log("auth: " + auth?.currentUser?.email);
+    navigate("/");
+  }
   return (
-    <div className="h-max flex flex-col bg-slate-300 px-8 py-3 rounded-lg">
-      <input
-        className="my-3 outline"
-        type="email"
-        placeholder="Email..."
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
-      ></input>
-      <input
-        className="my-3 outline"
-        type="password"
-        placeholder="Password..."
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      ></input>
-      <button className="my-3 bg-blue-400 outline h-full" onClick={signIn}>
-        Sign In
-      </button>
-      {/* <button className="my-3 bg-gray-200 outline" onClick={signInWithGoogle}>
-        Sign In With Google
-      </button> */}
-      <button className="my-3 bg-gray-300 outline" onClick={logOut}>
-        Sign Out
-      </button>
+    <div className="w-fit h-fit flex flex-col">
+      <div className="h-max w-max flex flex-col bg-slate-200 px-8 py-3 rounded-lg">
+        <input
+          className="my-3 outline"
+          type="email"
+          placeholder="Email..."
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        ></input>
+        <input
+          className="my-3 outline"
+          type="password"
+          placeholder="Password..."
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        ></input>
+        <button
+          className="my-3 py-1 bg-blue-400 text-white h-full"
+          onClick={handleSubmit}
+        >
+          Sign In
+        </button>
+      </div>
+      <div className="flex flex-row self-center">
+        <p>No account?</p>
+        <a className="ml-1  text-blue-600" href="/signup">
+          Sign Up
+        </a>
+      </div>
     </div>
   );
 }

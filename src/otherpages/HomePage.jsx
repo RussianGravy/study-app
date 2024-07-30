@@ -19,10 +19,20 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
+import { useAuth } from "../contexts/AuthContext.js";
 
 export function HomePage() {
   const [cardList, setCardList] = useState([]);
-  const cardsCollectionsRef = collection(db, "testCollection");
+  const temp = useAuth();
+  const cardsCollectionsRef = getCollection();
+  function getCollection() {
+    try {
+      const col = collection(db, temp.currentUser.email + "");
+      return col;
+    } catch (err) {
+      console.error(err);
+    }
+  }
   const getCardList = async () => {
     //Read the data
     try {
@@ -56,7 +66,7 @@ export function HomePage() {
 
   const deleteCard = async (id) => {
     try {
-      const cardDoc = doc(db, "testCollection", id);
+      const cardDoc = doc(db, temp.currentUser.email, id);
       await deleteDoc(cardDoc);
       getCardList();
     } catch (err) {
@@ -65,7 +75,7 @@ export function HomePage() {
   };
 
   const updateCard = async (id, t, c) => {
-    const cardDoc = doc(db, "testCollection", id);
+    const cardDoc = doc(db, temp.currentUser.email, id);
     try {
       await updateDoc(cardDoc, { title: t });
       getCardList();
@@ -81,9 +91,9 @@ export function HomePage() {
   };
 
   return (
-    <div className="w-screen h-screen flex float-right">
+    <div className="w-screen h-fit p-0 bg-blue-400">
       <Navbar></Navbar>
-      <div className=" pt-16 flex flex-row flex-wrap">
+      <div className="pt-16 px-0 flex flex-row flex-wrap portrait:w-min portrait:m-auto bg-red-600">
         {/* <Auth></Auth> */}
         <CreateCardButton submitFunction={submitCard}></CreateCardButton>
         {cardList.map((card) => {
