@@ -91,9 +91,9 @@ export function HomePage() {
   };
 
   return (
-    <div className="w-screen h-fit p-0 bg-blue-400">
+    <div className="w-screen h-fit p-0">
       <Navbar></Navbar>
-      <div className="pt-16 px-0 flex flex-row flex-wrap portrait:w-min portrait:m-auto bg-red-600">
+      <div className="pt-16 px-0 flex flex-row flex-wrap portrait:w-min portrait:m-auto">
         {/* <Auth></Auth> */}
         <CreateCardButton submitFunction={submitCard}></CreateCardButton>
         {cardList.map((card) => {
