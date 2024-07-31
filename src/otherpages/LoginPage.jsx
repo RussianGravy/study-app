@@ -10,7 +10,7 @@ export function LoginPage() {
     <div className="flex flex-row w-screen h-screen p-0">
       <div className="h-fit w-fit flex flex-row portrait:flex-col portrait:w-min self-center mx-auto">
         <h1 className="text-5xl w-fit landscape:mr-72 font-serif">
-          Personal Language App
+          Personal Study App
         </h1>
         <div className="m-auto p-0">
           <Auth></Auth>
