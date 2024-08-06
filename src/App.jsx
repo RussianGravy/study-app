@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import { LoginPage } from "./otherpages/LoginPage.jsx";
 import { HomePage } from "./otherpages/HomePage.jsx";
 import { SignUpPage } from "./otherpages/SignUpPage.jsx";
+import TestPage from "./otherpages/TestPage.jsx";
 import { auth, googleProvider, db } from "./config/firebase.js";
 //temp
 import { Container } from "react-bootstrap";
@@ -29,6 +30,7 @@ function App() {
               <Route path="/signup" Component={SignUpPage} />
               <Route path="/login" Component={LoginPage} />
               <Route path="/forgot-password" Component={ForgotPassword} />
+              <Route path="/test" Component={TestPage} />
             </Routes>
           </AuthProvider>
         </BrowserRouter>

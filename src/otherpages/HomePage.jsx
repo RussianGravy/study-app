@@ -20,9 +20,11 @@ import {
   doc,
 } from "firebase/firestore";
 import { useAuth } from "../contexts/AuthContext.js";
+import Modal from "../components/Modal.jsx";
 
 export function HomePage() {
   const [cardList, setCardList] = useState([]);
+  const [toggle, setToggle] = useState(true);
   const temp = useAuth();
   const cardsCollectionsRef = getCollection();
   function getCollection() {
@@ -75,26 +77,26 @@ export function HomePage() {
   };
 
   const updateCard = async (id, t, c) => {
-    const cardDoc = doc(db, temp.currentUser.email, id);
-    try {
-      await updateDoc(cardDoc, { title: t });
-      getCardList();
-    } catch (err) {
-      console.error(err);
-    }
-    try {
-      await updateDoc(cardDoc, { content: c });
-      getCardList();
-    } catch (err) {
-      console.error(err);
-    }
+    setToggle(!toggle);
+    // const cardDoc = doc(db, temp.currentUser.email, id);
+    // try {
+    //   await updateDoc(cardDoc, { title: t });
+    //   getCardList();
+    // } catch (err) {
+    //   console.error(err);
+    // }
+    // try {
+    //   await updateDoc(cardDoc, { content: c });
+    //   getCardList();
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   return (
     <div className="w-screen h-fit p-0">
       <Navbar></Navbar>
       <div className="pt-16 px-0 flex flex-row flex-wrap portrait:w-min portrait:m-auto">
-        {/* <Auth></Auth> */}
         <CreateCardButton submitFunction={submitCard}></CreateCardButton>
         {cardList.map((card) => {
           return (
@@ -112,6 +114,7 @@ export function HomePage() {
           );
         })}
       </div>
+      <Modal toggle={toggle}></Modal>
     </div>
   );
 }
