@@ -14,10 +14,6 @@ export function LoginPage() {
         </h1>
         <div className="m-auto p-0">
           <Auth></Auth>
-          {/* <label>Username</label>
-                    <input type="text" id="username" name="username" className='outline'></input>
-                    <label className=' mt-10'>Password</label>
-                    <input type="text" id="password" name="password" className='outline'></input> */}
         </div>
       </div>
     </div>

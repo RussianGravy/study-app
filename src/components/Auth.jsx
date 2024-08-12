@@ -22,6 +22,7 @@ export default function Auth() {
   return (
     <div className="w-fit h-fit flex flex-col">
       <div className="h-max w-max flex flex-col bg-slate-200 px-8 py-3 rounded-lg">
+        <h1 className="text-4xl mb-2 m-auto">Sign In</h1>
         <input
           className="my-3 outline"
           type="email"

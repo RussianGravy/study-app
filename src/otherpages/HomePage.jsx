@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import ReactDOM from "react-dom";
 import { useState } from "react";
 import { Navbar } from "../components/Navbar.jsx";
@@ -13,6 +14,7 @@ import {
   getDocs,
   collection,
   addDoc,
+  setDoc,
   deleteDoc,
   updateDoc,
   doc,
@@ -22,6 +24,9 @@ import Modal from "../components/Modal.jsx";
 
 export function HomePage() {
   const [cardList, setCardList] = useState([]);
+  const [containerWidth, setContainerWidth] = useState(
+    window.innerWidth - (window.innerWidth % 360) + "px"
+  );
   const [toggle, setToggle] = useState(false);
   const [modalContent, setModalContent] = useState(<></>);
   const modalVariables = { id: null };
@@ -54,16 +59,19 @@ export function HomePage() {
   }, []);
 
   const submitCard = async () => {
-    try {
-      await addDoc(cardsCollectionsRef, {
-        title: newTopic,
-        content: newContent,
-        userId: auth?.currentUser?.uid,
-      });
-      await getCardList();
-    } catch (err) {
-      console.error(err);
-    }
+    setModalContent(NewCardMenu);
+    console.log("new card button pressed, toggle set to " + toggle);
+    await setToggle(true);
+    // try {
+    //   await addDoc(cardsCollectionsRef, {
+    //     title: newTopic,
+    //     content: newContent,
+    //     userId: auth?.currentUser?.uid,
+    //   });
+    //   await getCardList();
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   const deleteCard = async (id) => {
@@ -125,15 +133,21 @@ export function HomePage() {
             const cardDoc = doc(db, temp.currentUser.email, modalVariables.id);
             console.log(cardDoc);
             deleteDoc(cardDoc);
-            await getCardList();
-            setToggle(false);
+            try {
+              getCardList();
+              //window.location.reload();
+            } catch (err) {
+              console.error(err);
+            } finally {
+              setToggle(false);
+            }
           }}
         >
           Yes
         </button>
       </div>
     </div>
-  );
+  ); //end of DeleteCard
 
   var updatedTopic;
   var updatedContent;
@@ -189,28 +203,101 @@ export function HomePage() {
         Update
       </button>
     </div>
-  );
+  ); //end of UpdateCard
+
+  const NewCardMenu = (
+    <div className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-96 p-3 rounded-lg border-2 border-black relative overflow-hidden">
+      <div className="text-5xl h-7 w-full self-center flex z-30">
+        <p className="grow text-2xl">New Card</p>
+        <button
+          onClick={async () => {
+            await setToggle(false);
+            console.log("toggled modal to " + toggle);
+            modalVariables.id = null;
+            modalVariables.topic = null;
+            modalVariables.content = null;
+          }}
+          className="text-white text-xl w-fit px-1 rounded bg-red-600"
+        >
+          Cancel
+        </button>
+      </div>
+      <div className="flex flex-wrap w-full">
+        <div className="mx-1 my-9 w-fit">
+          <input
+            type="text"
+            placeholder=" topic"
+            className="w-11/12 text-5xl rounded-xl mb-2"
+            onChange={(e) => {
+              updatedTopic = e.target.value;
+            }}
+          ></input>
+          <input
+            type="text"
+            placeholder=" content"
+            className="w-11/12 max-w-fit  text-3xl rounded-xl"
+            onChange={(e) => {
+              updatedContent = e.target.value;
+            }}
+          ></input>
+        </div>
+      </div>
+      <button
+        onClick={async () => {
+          await setDoc(doc(db, temp.currentUser.email, cardList.length + ""), {
+            title: updatedTopic,
+            content: updatedContent,
+            userId: auth?.currentUser?.uid,
+          });
+          modalVariables.id = null;
+          modalVariables.topic = null;
+          modalVariables.content = null;
+          await getCardList();
+          setToggle(false);
+        }}
+        className="bg-blue-600 text-white mx-auto py-1 px-7"
+      >
+        Create
+      </button>
+    </div>
+  ); //end of NewCard
+
+  console.log("window width is " + window.innerWidth);
+
+  window.addEventListener("resize", () => {
+    setContainerWidth(window.innerWidth - (window.innerWidth % 360) + "px");
+  });
 
   return (
-    <div className="w-screen h-fit p-0">
+    <div className="w-screen h-screen overflow-scroll p-0 relative bg-slate-500">
       <Navbar></Navbar>
-      <div className="pt-16 px-0 flex flex-row flex-wrap portrait:w-min portrait:m-auto">
-        <CreateCardButton submitFunction={submitCard}></CreateCardButton>
-        {cardList.map((card) => {
-          return (
-            <Card
-              key={card.id}
-              topic={card.title}
-              content={card.content}
-              deleteFunction={() => {
-                deleteCard(card.id);
-              }}
-              updateFunction={() => {
-                updateCard(card.id);
-              }}
-            ></Card>
-          );
-        })}
+      <CreateCardButton submitFunction={submitCard}></CreateCardButton>
+      <div
+        className="pt-16 px-0 flex flex-row flex-wrap m-auto"
+        style={{ width: containerWidth }}
+      >
+        {cardList.length == 0 ? (
+          <h1 className="text-white text-3xl text-center m-auto mt-10 leading-relaxed">
+            No cards to display! Press the 'plus' in the bottom right to add
+            your first card.
+          </h1>
+        ) : (
+          cardList.map((card) => {
+            return (
+              <Card
+                key={card.id}
+                topic={card.title}
+                content={card.content}
+                deleteFunction={() => {
+                  deleteCard(card.id);
+                }}
+                updateFunction={() => {
+                  updateCard(card.id);
+                }}
+              ></Card>
+            );
+          })
+        )}
       </div>
       <Modal toggle={toggle}>{modalContent}</Modal>
     </div>
