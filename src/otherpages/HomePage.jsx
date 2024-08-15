@@ -244,11 +244,14 @@ export function HomePage() {
       </div>
       <button
         onClick={async () => {
-          await setDoc(doc(db, temp.currentUser.email, cardList.length + ""), {
-            title: updatedTopic,
-            content: updatedContent,
-            userId: auth?.currentUser?.uid,
-          });
+          await setDoc(
+            doc(db, temp.currentUser.email, cardList.length + 1 + ""),
+            {
+              title: updatedTopic,
+              content: updatedContent,
+              userId: auth?.currentUser?.uid,
+            }
+          );
           modalVariables.id = null;
           modalVariables.topic = null;
           modalVariables.content = null;
