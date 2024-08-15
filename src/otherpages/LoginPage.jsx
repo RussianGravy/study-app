@@ -16,6 +16,9 @@ export function LoginPage() {
           <Auth></Auth>
         </div>
       </div>
+      <div className="fixed bottom-1 right-1">
+        <h1>Click for the</h1>
+      </div>
     </div>
   );
 }
