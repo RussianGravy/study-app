@@ -56,22 +56,12 @@ export function HomePage() {
   };
   useEffect(() => {
     getCardList();
-  }, []);
+  }, [toggle]);
 
   const submitCard = async () => {
     setModalContent(NewCardMenu);
     console.log("new card button pressed, toggle set to " + toggle);
     await setToggle(true);
-    // try {
-    //   await addDoc(cardsCollectionsRef, {
-    //     title: newTopic,
-    //     content: newContent,
-    //     userId: auth?.currentUser?.uid,
-    //   });
-    //   await getCardList();
-    // } catch (err) {
-    //   console.error(err);
-    // }
   };
 
   const deleteCard = async (id) => {
@@ -79,13 +69,6 @@ export function HomePage() {
     console.log("delete button pressed, toggle set to " + toggle);
     await setToggle(true);
     modalVariables.id = id;
-    // try {
-    //   const cardDoc = doc(db, temp.currentUser.email, id);
-    //   await deleteDoc(cardDoc);
-    //   getCardList();
-    // } catch (err) {
-    //   console.error(err);
-    // }
   };
 
   const updateCard = async (id) => {
@@ -93,19 +76,6 @@ export function HomePage() {
     await setToggle(true);
     console.log("update button pressed, toggle set to " + toggle);
     modalVariables.id = id;
-    // const cardDoc = doc(db, temp.currentUser.email, id);
-    // try {
-    //   await updateDoc(cardDoc, { title: t });
-    //   getCardList();
-    // } catch (err) {
-    //   console.error(err);
-    // }
-    // try {
-    //   await updateDoc(cardDoc, { content: c });
-    //   getCardList();
-    // } catch (err) {
-    //   console.error(err);
-    // }
   };
 
   const DeleteMenu = (
@@ -115,7 +85,6 @@ export function HomePage() {
         <button
           onClick={async () => {
             await setToggle(false);
-            console.log("toggled modal to " + toggle);
             modalVariables.id = null;
             modalVariables.topic = null;
             modalVariables.content = null;
@@ -131,11 +100,9 @@ export function HomePage() {
           className="text-blue-600"
           onClick={async () => {
             const cardDoc = doc(db, temp.currentUser.email, modalVariables.id);
-            console.log(cardDoc);
             deleteDoc(cardDoc);
             try {
-              getCardList();
-              //window.location.reload();
+              await getCardList();
             } catch (err) {
               console.error(err);
             } finally {
@@ -158,7 +125,6 @@ export function HomePage() {
         <button
           onClick={async () => {
             await setToggle(false);
-            console.log("toggled modal to " + toggle);
             modalVariables.id = null;
             modalVariables.topic = null;
             modalVariables.content = null;
@@ -212,7 +178,6 @@ export function HomePage() {
         <button
           onClick={async () => {
             await setToggle(false);
-            console.log("toggled modal to " + toggle);
             modalVariables.id = null;
             modalVariables.topic = null;
             modalVariables.content = null;
@@ -253,7 +218,6 @@ export function HomePage() {
           modalVariables.topic = null;
           modalVariables.content = null;
           await getCardList();
-          console.log(cardList);
           setToggle(false);
         }}
         className="bg-blue-600 text-white mx-auto py-1 px-7"
@@ -263,14 +227,13 @@ export function HomePage() {
     </div>
   ); //end of NewCard
 
-  console.log("window width is " + window.innerWidth);
-
   window.addEventListener("resize", () => {
     setContainerWidth(window.innerWidth - (window.innerWidth % 360) + "px");
   });
 
   document.body.style.overflow = "auto";
   document.body.classList.add("bg-slate-500");
+  // document.body.classList.add("");
 
   return (
     <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500">
