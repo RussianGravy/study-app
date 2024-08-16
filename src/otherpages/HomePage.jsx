@@ -269,6 +269,8 @@ export function HomePage() {
     setContainerWidth(window.innerWidth - (window.innerWidth % 360) + "px");
   });
 
+  document.body.style.overflow = "auto";
+
   return (
     <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500">
       <Navbar></Navbar>
