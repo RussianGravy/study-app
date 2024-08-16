@@ -274,7 +274,7 @@ export function HomePage() {
       <Navbar></Navbar>
       <CreateCardButton submitFunction={submitCard}></CreateCardButton>
       <div
-        className="pt-16 px-0 flex flex-row flex-wrap m-auto"
+        className="pt-16 pb-24 px-0 flex flex-row flex-wrap m-auto"
         style={{ width: containerWidth }}
       >
         {cardList.length == 0 ? (

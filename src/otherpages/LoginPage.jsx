@@ -6,8 +6,9 @@ import { useState } from "react";
 import Auth from "../components/Auth.jsx";
 
 export function LoginPage() {
+  document.body.style.overflow = "hidden";
   return (
-    <div className="flex flex-row w-screen h-screen p-0 overflow-hidden">
+    <div className="flex flex-row w-screen h-screen p-0 m-0 overflow-hidden">
       <div className="h-fit w-fit flex flex-row portrait:flex-col portrait:w-min self-center mx-auto">
         <h1 className="text-5xl w-fit landscape:mr-72 portrait:mb-6 portrait:text-center font-serif">
           Personal Study App
