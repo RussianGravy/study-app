@@ -8,7 +8,6 @@ import "./custom_css/navbar.css";
 
 export function Navbar() {
   const temp = useAuth();
-  console.log(temp.currentUser.email);
   return (
     <div className="w-screen h-14 flex flex-row bg-gray-300 fixed z-40 border-b-2 border-gray-400">
       <div className="flex grow items-center p-0">
