@@ -270,6 +270,7 @@ export function HomePage() {
   });
 
   document.body.style.overflow = "auto";
+  document.body.classList.add("bg-slate-500");
 
   return (
     <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500">
