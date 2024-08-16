@@ -41,7 +41,7 @@ export function HomePage() {
     }
   }
   const getCardList = async () => {
-    //Read the data
+    // Read the data
     try {
       const data = await getDocs(cardsCollectionsRef);
       const filteredData = data.docs.map((doc) => ({
@@ -52,7 +52,7 @@ export function HomePage() {
     } catch (err) {
       console.error(err);
     }
-    //Set card list
+    // Set card list
   };
   useEffect(() => {
     getCardList();
@@ -253,6 +253,7 @@ export function HomePage() {
           modalVariables.topic = null;
           modalVariables.content = null;
           await getCardList();
+          console.log(cardList);
           setToggle(false);
         }}
         className="bg-blue-600 text-white mx-auto py-1 px-7"
@@ -269,7 +270,7 @@ export function HomePage() {
   });
 
   return (
-    <div className="w-screen h-screen overflow-scroll p-0 relative bg-slate-500">
+    <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500">
       <Navbar></Navbar>
       <CreateCardButton submitFunction={submitCard}></CreateCardButton>
       <div
