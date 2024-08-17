@@ -9,7 +9,7 @@ export function LoginPage() {
   // document.body.style.overflow = "hidden";
   document.body.style.backgroundColor = "rgb(255, 255, 255)";
   return (
-    <div className="flex flex-row w-screen h-screen p-0 m-0 overflow-hidden">
+    <div className="relative flex flex-row w-screen h-screen p-0 m-0 overflow-hidden">
       <div className="h-fit w-fit flex flex-row portrait:flex-col portrait:w-min self-center mx-auto">
         <h1 className="text-5xl w-fit landscape:mr-72 portrait:mb-6 portrait:text-center font-serif">
           Personal Study App
@@ -18,7 +18,7 @@ export function LoginPage() {
           <Auth></Auth>
         </div>
       </div>
-      <div className="fixed bottom-4 right-4 w-fit flex flex-row">
+      <div className="absolute bottom-4 right-4 w-fit flex flex-row">
         <h1>Click for the</h1>{" "}
         <a
           href="https://github.com/RussianGravy/study-app"
