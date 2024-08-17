@@ -22,6 +22,7 @@ function App() {
         <BrowserRouter>
           <AuthProvider>
             <Routes>
+              <RouteChangeHandler />
               <Route
                 exact
                 path="/"
@@ -36,14 +37,22 @@ function App() {
         </BrowserRouter>
       </div>
     </Container>
-
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route index element={<LoginPage />} />
-    //     <Route path="/homepage" element={<HomePage />} />
-    //   </Routes>
-    // </BrowserRouter>
   );
 }
+
+const RouteChangeHandler = () => {
+  const location = useLocation();
+
+  React.useEffect(() => {
+    if (location.pathname === "/") {
+      // Light gray for login
+      document.body.classList.add("bg-slate-500");
+    } else {
+      document.body.style.backgroundColor = "white"; // White for home
+    }
+  }, [location.pathname]);
+
+  return null;
+};
 
 export default App;

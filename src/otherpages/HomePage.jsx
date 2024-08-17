@@ -32,6 +32,9 @@ export function HomePage() {
   const modalVariables = { id: null };
   const temp = useAuth();
   const cardsCollectionsRef = getCollection();
+
+  document.body.style.overflow = "auto";
+
   function getCollection() {
     try {
       const col = collection(db, temp.currentUser.email + "");
@@ -230,10 +233,6 @@ export function HomePage() {
   window.addEventListener("resize", () => {
     setContainerWidth(window.innerWidth - (window.innerWidth % 360) + "px");
   });
-
-  document.body.style.overflow = "auto";
-  document.body.classList.add("bg-slate-500");
-  // document.body.classList.add("");
 
   return (
     <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500">

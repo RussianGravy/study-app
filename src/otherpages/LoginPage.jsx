@@ -6,7 +6,7 @@ import { useState } from "react";
 import Auth from "../components/Auth.jsx";
 
 export function LoginPage() {
-  document.body.style.overflow = "hidden";
+  // document.body.style.overflow = "hidden";
   document.body.style.backgroundColor = "rgb(255, 255, 255)";
   return (
     <div className="flex flex-row w-screen h-screen p-0 m-0 overflow-hidden">
