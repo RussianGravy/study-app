@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Router,
+  useLocation,
+} from "react-router-dom";
 import React from "react";
 import ReactDOM from "react-dom";
 import { LoginPage } from "./otherpages/LoginPage.jsx";
@@ -21,8 +27,8 @@ function App() {
       <div style={{ maxWidth: "400px", width: "100%" }}>
         <BrowserRouter>
           <AuthProvider>
+            <RouteChangeHandler />
             <Routes>
-              <RouteChangeHandler />
               <Route
                 exact
                 path="/"
