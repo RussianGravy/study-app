@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../config/firebase.js";
 import { useState } from "react";
 import Auth from "../components/Auth.jsx";
-import styles from "../components/custom_css/loginpage.module.css";
+import styles from "../components/custom_css/global.module.css";
 
 export function LoginPage() {
+  useEffect(() => {
+    document.body.className = styles.loginBody;
+    return () => {
+      document.body.className = "";
+    };
+  }, []);
   return (
     <div className="relative flex flex-row w-screen h-screen p-0 m-0 overflow-hidden">
       <div className="h-fit w-fit flex flex-row portrait:flex-col portrait:w-min self-center mx-auto">

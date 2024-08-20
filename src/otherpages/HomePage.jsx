@@ -21,7 +21,7 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "../contexts/AuthContext.js";
 import Modal from "../components/Modal.jsx";
-import styles from "../components/custom_css/homepage.module.css";
+import styles from "../components/custom_css/global.module.css";
 
 export function HomePage() {
   const [cardList, setCardList] = useState([]);
@@ -34,7 +34,12 @@ export function HomePage() {
   const temp = useAuth();
   const cardsCollectionsRef = getCollection();
 
-  document.body.style.overflow = "auto";
+  useEffect(() => {
+    document.body.className = styles.homeBody;
+    return () => {
+      document.body.className = "";
+    };
+  }, []);
 
   function getCollection() {
     try {
