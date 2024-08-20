@@ -1,10 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Router,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import React from "react";
 import ReactDOM from "react-dom";
 import { LoginPage } from "./otherpages/LoginPage.jsx";
@@ -27,7 +21,6 @@ function App() {
       <div style={{ maxWidth: "400px", width: "100%" }}>
         <BrowserRouter>
           <AuthProvider>
-            <RouteChangeHandler />
             <Routes>
               <Route
                 exact
@@ -45,20 +38,5 @@ function App() {
     </Container>
   );
 }
-
-const RouteChangeHandler = () => {
-  const location = useLocation();
-
-  React.useEffect(() => {
-    if (location.pathname === "/") {
-      // Light gray for login
-      document.body.classList.add("bg-slate-500");
-    } else {
-      document.body.style.backgroundColor = "white"; // White for home
-    }
-  }, [location.pathname]);
-
-  return null;
-};
 
 export default App;

@@ -21,6 +21,7 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "../contexts/AuthContext.js";
 import Modal from "../components/Modal.jsx";
+import styles from "../components/custom_css/homepage.module.css";
 
 export function HomePage() {
   const [cardList, setCardList] = useState([]);
