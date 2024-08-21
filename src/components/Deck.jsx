@@ -5,7 +5,7 @@ export function Deck({ title, subject, selectFunction }) {
     var rAng = Math.floor(Math.random() * 11);
     var rDir = Math.floor(Math.random() * 11);
     var angle;
-    if (rAng > 5) angle = "rotate-3";
+    if (rAng >= 5) angle = "rotate-3";
     if (rAng < 5) angle = "rotate-6";
     if (rDir > 5) angle = " -" + angle;
 
