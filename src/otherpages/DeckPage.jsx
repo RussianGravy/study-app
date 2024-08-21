@@ -258,10 +258,10 @@ export function DeckPage() {
   });
 
   return (
-    <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500">
+    <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500 flex flex-col">
       <Navbar></Navbar>
       <CreateCardButton submitFunction={submitCard}></CreateCardButton>
-      <h1 className="text-white text-5xl pt-20 ml-10 w-full">
+      <h1 className="text-white text-5xl pt-20 ml-10">
         {deckValues.currentDeck}
       </h1>
       <div
