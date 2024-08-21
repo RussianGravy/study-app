@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { LoginPage } from "./otherpages/LoginPage.jsx";
 import { HomePage } from "./otherpages/HomePage.jsx";
+import { DeckPage } from "./otherpages/DeckPage.jsx";
 import { SignUpPage } from "./otherpages/SignUpPage.jsx";
 import TestPage from "./otherpages/TestPage.jsx";
 import { auth, googleProvider, db } from "./config/firebase.js";
@@ -10,7 +11,7 @@ import { auth, googleProvider, db } from "./config/firebase.js";
 import { Container } from "react-bootstrap";
 import { AuthProvider } from "./contexts/AuthContext.js";
 import { PrivateRoute } from "./components/PrivateRoute.js";
-import ForgotPassword from "./otherpages/ForgotPassword.jsx";
+import { DeckProvider } from "./contexts/DeckContext.js";
 
 function App() {
   return (
@@ -19,21 +20,27 @@ function App() {
       style={{ minHeight: "100vh" }}
     >
       <div style={{ maxWidth: "400px", width: "100%" }}>
-        <BrowserRouter>
-          <AuthProvider>
-            <Routes>
-              <Route
-                exact
-                path="/"
-                element={<PrivateRoute Component={HomePage} />}
-              />
-              <Route path="/signup" Component={SignUpPage} />
-              <Route path="/login" Component={LoginPage} />
-              <Route path="/forgot-password" Component={ForgotPassword} />
-              <Route path="/test" Component={TestPage} />
-            </Routes>
-          </AuthProvider>
-        </BrowserRouter>
+        <DeckProvider>
+          <BrowserRouter>
+            <AuthProvider>
+              <Routes>
+                <Route
+                  path="/"
+                  element={<PrivateRoute Component={HomePage} />}
+                />
+                <Route
+                  exact
+                  path="/deck"
+                  element={<PrivateRoute Component={DeckPage} />}
+                />
+
+                <Route path="/signup" Component={SignUpPage} />
+                <Route path="/login" Component={LoginPage} />
+                <Route path="/test" Component={TestPage} />
+              </Routes>
+            </AuthProvider>
+          </BrowserRouter>
+        </DeckProvider>
       </div>
     </Container>
   );

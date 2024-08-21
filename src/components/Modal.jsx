@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-export default function Modal({ children, toggle }) {
+export function Modal({ children, toggle }) {
   //   const [modal, setModal] = useState(false);
   if (toggle) {
     document.body.classList.add("overflow-y-hidden");

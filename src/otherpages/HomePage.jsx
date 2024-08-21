@@ -1,277 +1,115 @@
-import React, { useEffect } from "react";
-import { Navigate } from "react-router-dom";
-import ReactDOM from "react-dom";
-import { useState } from "react";
-import { Navbar } from "../components/Navbar.jsx";
-import { Card } from "../components/Card.jsx";
-import {
-  CreateCardButton,
-  newContent,
-  newTopic,
-} from "../components/CreateCardButton.jsx";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Navbar } from "../components/Navbar";
+import { Modal } from "../components/Modal";
+import { CreateCardButton } from "../components/CreateCardButton";
+import { Deck } from "../components/Deck";
+import { collection, doc, getDocs, getDoc } from "firebase/firestore";
 import { auth, googleProvider, db } from "../config/firebase.js";
-import {
-  getDocs,
-  collection,
-  addDoc,
-  setDoc,
-  deleteDoc,
-  updateDoc,
-  doc,
-} from "firebase/firestore";
-import { useAuth } from "../contexts/AuthContext.js";
-import Modal from "../components/Modal.jsx";
+import { useAuth } from "../contexts/AuthContext";
+import { useDeck } from "../contexts/DeckContext.js";
 import styles from "../components/custom_css/global.module.css";
 
 export function HomePage() {
-  const [cardList, setCardList] = useState([]);
-  const [containerWidth, setContainerWidth] = useState(
-    window.innerWidth - (window.innerWidth % 360) + "px"
-  );
-  const [toggle, setToggle] = useState(false);
-  const [modalContent, setModalContent] = useState(<></>);
-  const modalVariables = { id: null };
+  const [decks, setDecks] = useState([]);
+  /* { title: "test", subject: "test" } */
+  const [modalToggle, setModalToggle] = useState(false);
+  const navigate = useNavigate();
   const temp = useAuth();
-  const cardsCollectionsRef = getCollection();
+  const deckValues = useDeck();
+
+  const decksDocRef = getDocRef(); //reference (not doc itself)
 
   useEffect(() => {
     document.body.className = styles.homeBody;
     return () => {
       document.body.className = "";
     };
-  }, []);
+  }, []); // body styling for this page
 
-  function getCollection() {
+  useEffect(() => {
+    deckValues.changeDeck("");
+    getDeckList();
+  }, []); // on load
+
+  function getDocRef() {
+    //removing 'async' fixed it
     try {
-      const col = collection(db, temp.currentUser.email + "");
-      return col;
+      const ref = doc(db, temp.currentUser.email + "", "decks");
+      console.log(ref);
+      return ref;
     } catch (err) {
       console.error(err);
     }
   }
-  const getCardList = async () => {
-    // Read the data
+
+  async function getDeckList() {
     try {
-      const data = await getDocs(cardsCollectionsRef);
-      const filteredData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setCardList(filteredData);
+      var tempArr = (await getDoc(decksDocRef)).data().all_names.split(",");
+      setDecks(tempArr);
     } catch (err) {
       console.error(err);
     }
-    // Set card list
-  };
-  useEffect(() => {
-    getCardList();
-  }, [toggle]);
+  }
 
-  const submitCard = async () => {
-    setModalContent(NewCardMenu);
-    console.log("new card button pressed, toggle set to " + toggle);
-    await setToggle(true);
-  };
+  function selectDeck(name) {
+    deckValues.changeDeck(name);
+    console.log("current deck set to " + deckValues.currentDeck);
+    navigate("/deck");
+  }
 
-  const deleteCard = async (id) => {
-    setModalContent(DeleteMenu);
-    console.log("delete button pressed, toggle set to " + toggle);
-    await setToggle(true);
-    modalVariables.id = id;
-  };
-
-  const updateCard = async (id) => {
-    setModalContent(EditMenu);
-    await setToggle(true);
-    console.log("update button pressed, toggle set to " + toggle);
-    modalVariables.id = id;
-  };
-
-  const DeleteMenu = (
-    <div className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-fit p-3 rounded-lg border-2 border-black relative overflow-hidden">
-      <div className="text-5xl h-7 w-full self-center flex z-30">
-        <p className="grow text-2xl">Deleting Card</p>
-        <button
-          onClick={async () => {
-            await setToggle(false);
-            modalVariables.id = null;
-            modalVariables.topic = null;
-            modalVariables.content = null;
-          }}
-          className="text-white text-xl w-fit px-1 rounded bg-red-600"
-        >
-          Cancel
-        </button>
-      </div>
-      <div className="w-fit mx-auto my-8 text-xl">
-        Are you Sure?{" "}
-        <button
-          className="text-blue-600"
-          onClick={async () => {
-            const cardDoc = doc(db, temp.currentUser.email, modalVariables.id);
-            deleteDoc(cardDoc);
-            try {
-              await getCardList();
-            } catch (err) {
-              console.error(err);
-            } finally {
-              setToggle(false);
-            }
-          }}
-        >
-          Yes
-        </button>
-      </div>
-    </div>
-  ); //end of DeleteCard
-
-  var updatedTopic;
-  var updatedContent;
-  const EditMenu = (
-    <div className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-fit p-3 rounded-lg border-2 border-black relative overflow-hidden">
-      <div className="text-5xl h-7 w-full self-center flex z-30">
-        <p className="grow text-2xl">Updating Card</p>
-        <button
-          onClick={async () => {
-            await setToggle(false);
-            modalVariables.id = null;
-            modalVariables.topic = null;
-            modalVariables.content = null;
-          }}
-          className="text-white text-xl w-fit px-1 rounded bg-red-600"
-        >
-          Cancel
-        </button>
-      </div>
-      <div className="mt-8 flex flex-wrap w-full">
-        <h1>Topic</h1>
-        <input
-          type="text"
-          placeholder="topic"
-          className="w-fit mb-4 text-3xl rounded-xl"
-          onChange={(e) => {
-            updatedTopic = e.target.value;
-          }}
-        />
-        <h1>Content</h1>
-        <input
-          type="text"
-          placeholder="content"
-          className="w-fit mb-4 text-3xl rounded-xl"
-          onChange={(e) => {
-            updatedContent = e.target.value;
-          }}
-        />
-      </div>
-      <button
-        onClick={async () => {
-          const cardDoc = doc(db, temp.currentUser.email, modalVariables.id);
-          updateDoc(cardDoc, { title: updatedTopic, content: updatedContent });
-          modalVariables.id = null;
-          modalVariables.topic = null;
-          modalVariables.content = null;
-          await getCardList();
-          setToggle(false);
-        }}
-        className="bg-blue-600 text-white mx-auto py-1 px-7"
-      >
-        Update
-      </button>
-    </div>
-  ); //end of UpdateCard
-
-  const NewCardMenu = (
+  const CreateDeck = (
     <div className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-96 p-3 rounded-lg border-2 border-black relative overflow-hidden">
       <div className="text-5xl h-7 w-full self-center flex z-30">
-        <p className="grow text-2xl">New Card</p>
+        <p className="grow text-2xl">New Deck</p>
         <button
           onClick={async () => {
-            await setToggle(false);
-            modalVariables.id = null;
-            modalVariables.topic = null;
-            modalVariables.content = null;
+            await setModalToggle(false);
           }}
           className="text-white text-xl w-fit px-1 rounded bg-red-600"
         >
           Cancel
         </button>
       </div>
-      <div className="flex flex-wrap w-full">
-        <div className="mx-1 my-9 w-fit">
-          <input
-            type="text"
-            placeholder=" topic"
-            className="w-11/12 text-5xl rounded-xl mb-2"
-            onChange={(e) => {
-              updatedTopic = e.target.value;
-            }}
-          ></input>
-          <input
-            type="text"
-            placeholder=" content"
-            className="w-11/12 max-w-fit  text-3xl rounded-xl"
-            onChange={(e) => {
-              updatedContent = e.target.value;
-            }}
-          ></input>
-        </div>
-      </div>
-      <button
-        onClick={async () => {
-          await setDoc(doc(db, temp.currentUser.email, cardList.length + ""), {
-            title: updatedTopic,
-            content: updatedContent,
-            userId: auth?.currentUser?.uid,
-          });
-          modalVariables.id = null;
-          modalVariables.topic = null;
-          modalVariables.content = null;
-          await getCardList();
-          setToggle(false);
-        }}
-        className="bg-blue-600 text-white mx-auto py-1 px-7"
-      >
-        Create
-      </button>
     </div>
-  ); //end of NewCard
-
-  window.addEventListener("resize", () => {
-    setContainerWidth(window.innerWidth - (window.innerWidth % 360) + "px");
-  });
+  ); //end of Create Deck;
 
   return (
     <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500">
       <Navbar></Navbar>
-      <CreateCardButton submitFunction={submitCard}></CreateCardButton>
-      <div
-        className="pt-16 pb-24 px-0 flex flex-row flex-wrap m-auto"
-        style={{ width: containerWidth }}
-      >
-        {cardList.length == 0 ? (
-          <h1 className="text-white text-3xl text-center m-auto mt-10 leading-relaxed">
-            No cards to display! Press the 'plus' in the bottom right to add
-            your first card.
-          </h1>
-        ) : (
-          cardList.map((card) => {
-            return (
-              <Card
-                key={card.id}
-                topic={card.title}
-                content={card.content}
-                deleteFunction={() => {
-                  deleteCard(card.id);
-                }}
-                updateFunction={() => {
-                  updateCard(card.id);
-                }}
-              ></Card>
-            );
-          })
-        )}
+      <Modal toggle={modalToggle}>{CreateDeck}</Modal>
+      <CreateCardButton
+        submitFunction={() => {
+          setModalToggle(true);
+        }}
+      ></CreateCardButton>
+      <div className="pt-5 pb-10 w-screen flex flex-col">
+        <h1 className="text-white text-5xl mt-20 ml-10">Your Decks</h1>
+        <div className="w-auto px-8 h-max flex flex-row flex-nowrap overflow-x-scroll">
+          {decks.length > 0 ? (
+            decks.map((name) => {
+              return (
+                <Deck
+                  title={name}
+                  subject={""}
+                  selectFunction={() => {
+                    selectDeck(name);
+                  }}
+                  key={name}
+                ></Deck>
+              );
+            })
+          ) : (
+            <h2 className="mt-8 ml-12 text-4xl text-gray-300">
+              No decks to display. Press the 'plus' to begin your first deck.
+            </h2>
+          )}
+        </div>
+        <h1 className="text-white text-5xl mt-10 ml-10">Friends</h1>
+        <h2 className="mt-8 ml-12 text-4xl text-gray-300">
+          no users to friend
+        </h2>
       </div>
-      <Modal toggle={toggle}>{modalContent}</Modal>
     </div>
   );
 }
