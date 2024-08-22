@@ -21,7 +21,7 @@ export function Navbar() {
         <button className="bg-blue-600 text-white text-2xl portrait:text-lg p-3 right">
           \/
         </button> */}
-      <div className="w-max right flgex flex-col">
+      <div className="w-max right flex flex-col">
         <button
           onClick={() => {
             navigate("/");
