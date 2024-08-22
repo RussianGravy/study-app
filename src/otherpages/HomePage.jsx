@@ -4,6 +4,9 @@ import { Navbar } from "../components/Navbar";
 import { Modal } from "../components/Modal";
 import { CreateCardButton } from "../components/CreateCardButton";
 import { Deck } from "../components/Deck";
+import { DeckDisplay } from "../components/DeckDisplay.jsx";
+import { FriendDisplay } from "../components/FriendDisplay.jsx";
+import { UserDisplay } from "../components/UserDisplay.jsx";
 import {
   collection,
   doc,
@@ -133,46 +136,22 @@ export function HomePage() {
 
   return (
     <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500">
-      <Navbar></Navbar>
+      <Navbar />
       <Modal toggle={modalToggle}>{CreateDeck}</Modal>
       <CreateCardButton
         submitFunction={() => {
           setModalToggle(true);
         }}
-      ></CreateCardButton>
-      <div className="pt-5 pb-10 w-screen flex flex-col">
-        <h1 className="text-white text-5xl mt-20 ml-10">Your Decks</h1>
-        <div className="bg-gray-600 h-fit w-11/12 rounded-lg m-auto mt-5 relative">
-          <div className="w-full h-max px-8 flex flex-row flex-nowrap overflow-x-scroll">
-            {decks.length > 0 ? (
-              decks.split(",").map((name) => {
-                return (
-                  <Deck
-                    title={name}
-                    subject={""}
-                    selectFunction={() => {
-                      selectDeck(name);
-                    }}
-                    key={name}
-                  ></Deck>
-                );
-              })
-            ) : (
-              <h2 className="my-auto ml-6 py-2 text-4xl text-gray-300">
-                No decks to display. Press the 'plus' to begin your first deck.
-              </h2>
-            )}
-          </div>
-          {decks.split(",").length > 1 ? (
-            <div className="absolute top-0 right-0 h-full w-28 from-transparent to-gray-700 bg-gradient-to-r"></div>
-          ) : (
-            ""
-          )}
-        </div>
-        <h1 className="text-white text-5xl mt-10 ml-10">Friends</h1>
-        <h2 className="mt-8 ml-14 text-4xl text-gray-300">
-          No users to friend.
-        </h2>
+      />
+      <div className="pt-20 pb-24 w-screen h-fit flex flex-row flex-wrap">
+        <UserDisplay />
+        <DeckDisplay
+          sf={() => {
+            selectDeck();
+          }}
+          decks={decks.split(",")}
+        />
+        <FriendDisplay />
       </div>
     </div>
   );
