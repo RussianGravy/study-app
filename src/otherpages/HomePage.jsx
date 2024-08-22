@@ -4,15 +4,22 @@ import { Navbar } from "../components/Navbar";
 import { Modal } from "../components/Modal";
 import { CreateCardButton } from "../components/CreateCardButton";
 import { Deck } from "../components/Deck";
-import { collection, doc, getDocs, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { auth, googleProvider, db } from "../config/firebase.js";
 import { useAuth } from "../contexts/AuthContext";
 import { useDeck } from "../contexts/DeckContext.js";
 import styles from "../components/custom_css/global.module.css";
 
 export function HomePage() {
-  const [decks, setDecks] = useState([]);
-  /* { title: "test", subject: "test" } */
+  const [decks, setDecks] = useState("");
+  const [newDeckName, setNewDeckName] = useState("");
   const [modalToggle, setModalToggle] = useState(false);
   const navigate = useNavigate();
   const temp = useAuth();
@@ -36,7 +43,6 @@ export function HomePage() {
     //removing 'async' fixed it
     try {
       const ref = doc(db, temp.currentUser.email + "", "decks");
-      console.log(ref);
       return ref;
     } catch (err) {
       console.error(err);
@@ -45,8 +51,8 @@ export function HomePage() {
 
   async function getDeckList() {
     try {
-      var tempArr = (await getDoc(decksDocRef)).data().all_names.split(",");
-      setDecks(tempArr);
+      var tempDecks = (await getDoc(decksDocRef)).data().all_names;
+      setDecks(tempDecks);
     } catch (err) {
       console.error(err);
     }
@@ -54,8 +60,33 @@ export function HomePage() {
 
   function selectDeck(name) {
     deckValues.changeDeck(name);
-    console.log("current deck set to " + deckValues.currentDeck);
     navigate("/deck");
+  }
+
+  function createDeck(name) {
+    if (!decks.includes(name)) {
+      console.log("creating " + newDeckName);
+      const colRef = collection(db, temp.currentUser.email + "/decks/" + name);
+      const docRef = doc(colRef, "metadata"); // You can name this document anything you want
+      setDoc(docRef, {
+        createdAt: new Date(),
+        name: name,
+      })
+        .then(() => {
+          console.log("Deck created successfully!");
+          getDeckList(); // Refresh deck list
+        })
+        .catch((err) => {
+          console.error("Error creating deck: ", err);
+        });
+      deleteDoc(docRef);
+      var newString;
+      if (decks.length > 0) newString = decks + ", " + name;
+      else newString = name;
+      setDoc(decksDocRef, { all_names: newString });
+      getDeckList();
+    }
+    setModalToggle(false);
   }
 
   const CreateDeck = (
@@ -71,6 +102,25 @@ export function HomePage() {
           Cancel
         </button>
       </div>
+      <div className="flex flex-wrap w-full">
+        <input
+          type="text"
+          placeholder=" topic"
+          className="w-11/12 text-5xl rounded-xl mx-auto mt-10 mb-24"
+          onChange={(e) => {
+            setNewDeckName(e.target.value);
+          }}
+        ></input>
+      </div>
+      <button
+        onClick={async () => {
+          createDeck(newDeckName);
+          setNewDeckName("");
+        }}
+        className="bg-blue-600 text-white mx-auto py-1 w-10/12"
+      >
+        Create
+      </button>
     </div>
   ); //end of Create Deck;
 
@@ -87,7 +137,7 @@ export function HomePage() {
         <h1 className="text-white text-5xl mt-20 ml-10">Your Decks</h1>
         <div className="w-auto px-8 h-max flex flex-row flex-nowrap overflow-x-scroll">
           {decks.length > 0 ? (
-            decks.map((name) => {
+            decks.split(",").map((name) => {
               return (
                 <Deck
                   title={name}
@@ -100,14 +150,14 @@ export function HomePage() {
               );
             })
           ) : (
-            <h2 className="mt-8 ml-12 text-4xl text-gray-300">
+            <h2 className="mt-8 ml-6 text-4xl text-gray-300">
               No decks to display. Press the 'plus' to begin your first deck.
             </h2>
           )}
         </div>
         <h1 className="text-white text-5xl mt-10 ml-10">Friends</h1>
-        <h2 className="mt-8 ml-12 text-4xl text-gray-300">
-          no users to friend
+        <h2 className="mt-8 ml-14 text-4xl text-gray-300">
+          No users to friend.
         </h2>
       </div>
     </div>

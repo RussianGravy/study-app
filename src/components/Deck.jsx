@@ -29,7 +29,7 @@ export function Deck({ title, subject, selectFunction }) {
         }
       ></div>
       <div className="bg-slate-300 flex flex-col w-80 h-96 rounded-lg border-2 border-black relative overflow-hidden">
-        <div className="w-fit h-fit mx-auto mt-20 text-center text-gray-500">
+        <div className="w-fit h-fit mx-auto mt-20 text-center text-gray-800">
           <h1 className="text-5xl">{title}</h1>
           <h2 className="text-3xl">{subject}</h2>
         </div>
