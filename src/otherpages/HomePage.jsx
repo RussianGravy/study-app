@@ -140,7 +140,7 @@ export function HomePage() {
       />
       <div className="pt-20 pb-24 w-screen h-fit flex flex-row flex-wrap">
         <UserDisplay />
-        <DeckDisplay decks={decks.split(",")} />
+        <DeckDisplay decks={decks} />
         <FriendDisplay />
       </div>
     </div>
