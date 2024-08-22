@@ -135,7 +135,7 @@ export function HomePage() {
       ></CreateCardButton>
       <div className="pt-5 pb-10 w-screen flex flex-col">
         <h1 className="text-white text-5xl mt-20 ml-10">Your Decks</h1>
-        <div className="w-auto px-8 h-max flex flex-row flex-nowrap overflow-x-scroll">
+        <div className="bg-gray-600 w-11/12 rounded-lg m-auto mt-5 px-8 h-max flex flex-row flex-nowrap overflow-x-scroll">
           {decks.length > 0 ? (
             decks.split(",").map((name) => {
               return (
@@ -150,7 +150,7 @@ export function HomePage() {
               );
             })
           ) : (
-            <h2 className="mt-8 ml-6 text-4xl text-gray-300">
+            <h2 className="my-auto ml-6 py-2 text-4xl text-gray-300">
               No decks to display. Press the 'plus' to begin your first deck.
             </h2>
           )}
