@@ -17,27 +17,27 @@ export function Navbar() {
           {temp.currentUser.email}
         </h1>
       </div>
-      {/* <div id="dropdown" className="flex flex-col h-14 overflow-hidden">
+      <div id="dropdown" className="flex flex-col h-14 overflow-hidden">
         <button className="bg-blue-600 text-white text-2xl portrait:text-lg p-3 right">
           \/
-        </button> */}
-      <div className="w-max right flex flex-col">
-        <button
-          onClick={() => {
-            navigate("/");
-          }}
-          className="bg-blue-600 text-white text-2xl portrait:text-lg py-3 w-28"
-        >
-          Decks
         </button>
-        <button
-          onClick={temp.logOut}
-          className="bg-blue-600 text-white text-2xl portrait:text-lg py-3 w-28"
-        >
-          Log Out
-        </button>
+        <div className="w-max right flex flex-col">
+          <button
+            onClick={() => {
+              navigate("/");
+            }}
+            className="bg-blue-600 text-white text-2xl portrait:text-lg py-3 w-28"
+          >
+            Decks
+          </button>
+          <button
+            onClick={temp.logOut}
+            className="bg-blue-600 text-white text-2xl portrait:text-lg py-3 w-28"
+          >
+            Log Out
+          </button>
+        </div>
       </div>
-      {/* </div> */}
     </div>
   );
 }
