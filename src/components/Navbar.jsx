@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { useNavigate } from "react-router-dom";
 import { Auth } from "../components/Auth.jsx";
 import { useState } from "react";
 import { auth, googleProvider } from "../config/firebase.js";
@@ -7,6 +8,7 @@ import { useAuth } from "../contexts/AuthContext.js";
 import "./custom_css/navbar.css";
 
 export function Navbar() {
+  const navigate = useNavigate();
   const temp = useAuth();
   return (
     <div className="w-screen h-14 flex flex-row bg-gray-300 fixed z-40 border-b-2 border-gray-400">
@@ -19,10 +21,18 @@ export function Navbar() {
         <button className="bg-blue-600 text-white text-2xl portrait:text-lg p-3 right">
           \/
         </button> */}
-      <div>
+      <div className="w-max right flgex flex-col">
+        <button
+          onClick={() => {
+            navigate("/");
+          }}
+          className="bg-blue-600 text-white text-2xl portrait:text-lg p-3"
+        >
+          Decks
+        </button>
         <button
           onClick={temp.logOut}
-          className="bg-blue-600 text-white text-2xl portrait:text-lg p-3 right"
+          className="bg-blue-600 text-white text-2xl portrait:text-lg p-3"
         >
           Log Out
         </button>
