@@ -1,7 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Deck } from "./Deck";
+import { useDeck } from "../contexts/DeckContext";
 
 export function DeckDisplay({ decks, sf }) {
+  const deckValues = useDeck();
+  const navigate = useNavigate();
+
+  function selectDeck(name) {
+    deckValues.changeDeck(name);
+    navigate("/deck");
+  }
+
   return (
     <div className="bg-gray-600 h-fit w-7/12 portrait:w-11/12 rounded-lg relative mx-auto">
       <h1 className="text-white text-5xl mt-5 ml-10">Your Decks</h1>
@@ -12,7 +22,9 @@ export function DeckDisplay({ decks, sf }) {
               <Deck
                 title={name}
                 subject={""}
-                selectFunction={sf}
+                selectFunction={() => {
+                  selectDeck(name);
+                }}
                 key={name}
               ></Deck>
             );

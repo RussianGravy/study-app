@@ -61,11 +61,6 @@ export function HomePage() {
     }
   }
 
-  function selectDeck(name) {
-    deckValues.changeDeck(name);
-    navigate("/deck");
-  }
-
   function createDeck(name) {
     if (!decks.includes(name)) {
       console.log("creating " + newDeckName);
@@ -145,12 +140,7 @@ export function HomePage() {
       />
       <div className="pt-20 pb-24 w-screen h-fit flex flex-row flex-wrap">
         <UserDisplay />
-        <DeckDisplay
-          sf={() => {
-            selectDeck();
-          }}
-          decks={decks.split(",")}
-        />
+        <DeckDisplay decks={decks.split(",")} />
         <FriendDisplay />
       </div>
     </div>
