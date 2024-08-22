@@ -26,13 +26,13 @@ export function Navbar() {
           onClick={() => {
             navigate("/");
           }}
-          className="bg-blue-600 text-white text-2xl portrait:text-lg p-3"
+          className="bg-blue-600 text-white text-2xl portrait:text-lg py-3 w-28"
         >
           Decks
         </button>
         <button
           onClick={temp.logOut}
-          className="bg-blue-600 text-white text-2xl portrait:text-lg p-3"
+          className="bg-blue-600 text-white text-2xl portrait:text-lg py-3 w-28"
         >
           Log Out
         </button>
