@@ -8,7 +8,7 @@ import {
   updatePassword,
   updateEmail,
 } from "firebase/auth";
-import { setDoc, getDoc, doc } from "firebase/firestore";
+import { setDoc, getDoc, doc, collection } from "firebase/firestore";
 
 const AuthContext = createContext();
 
@@ -27,8 +27,13 @@ export function AuthProvider({ children }) {
   async function signUp(user_name, email, password) {
     createUserWithEmailAndPassword(auth, email, password);
     try {
+      //store username
       var ref = await doc(db, email, "username");
       setDoc(ref, { username: user_name });
+      //store user globally
+      var docRef = await doc(db, "global_data", "users");
+      var oldData = (await getDoc(docRef)).data();
+      setDoc();
     } catch (err) {
       console.error(err);
     }

@@ -63,7 +63,6 @@ export function HomePage() {
 
   function createDeck(name) {
     if (!decks.includes(name)) {
-      console.log("creating " + newDeckName);
       const colRef = collection(db, temp.currentUser.email + "/decks/" + name);
       const docRef = doc(colRef, "metadata"); // You can name this document anything you want
       setDoc(docRef, {
@@ -71,7 +70,6 @@ export function HomePage() {
         name: name,
       })
         .then(() => {
-          console.log("Deck created successfully!");
           getDeckList(); // Refresh deck list
         })
         .catch((err) => {

@@ -15,7 +15,6 @@ export function UserDisplay() {
   async function getUsername() {
     try {
       const ref = doc(db, temp.currentUser.email, "username");
-      console.log("ref " + ref);
       setUsername((await getDoc(ref)).data().username);
     } catch (err) {
       console.error(err);

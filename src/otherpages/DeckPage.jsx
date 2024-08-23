@@ -57,7 +57,6 @@ export function DeckPage() {
 
   function getCollection() {
     try {
-      console.log(collectionPath);
       const col = collection(db, collectionPath);
       return col;
     } catch (err) {
@@ -68,7 +67,6 @@ export function DeckPage() {
   const getCardList = async () => {
     // Read the data
     try {
-      console.log(collectionPath);
       const data = await getDocs(cardsCollectionsRef);
       const filteredData = data.docs.map((doc) => ({
         ...doc.data(),
@@ -86,13 +84,11 @@ export function DeckPage() {
 
   const submitCard = async () => {
     setModalContent(NewCardMenu);
-    console.log("new card button pressed, toggle set to " + toggle);
     await setToggle(true);
   };
 
   const deleteCard = async (id) => {
     setModalContent(DeleteMenu);
-    console.log("delete button pressed, toggle set to " + toggle);
     await setToggle(true);
     modalVariables.id = id;
   };
@@ -100,7 +96,6 @@ export function DeckPage() {
   const updateCard = async (id) => {
     setModalContent(EditMenu);
     await setToggle(true);
-    console.log("update button pressed, toggle set to " + toggle);
     modalVariables.id = id;
   };
 

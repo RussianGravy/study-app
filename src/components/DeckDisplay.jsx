@@ -4,7 +4,6 @@ import { Deck } from "./Deck";
 import { useDeck } from "../contexts/DeckContext";
 
 export function DeckDisplay({ decks }) {
-  console.log(decks);
   const deckValues = useDeck();
   const navigate = useNavigate();
 
