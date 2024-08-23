@@ -1,5 +1,5 @@
 import { React, useContext, useState, useEffect, createContext } from "react";
-import { auth } from "../config/firebase.js";
+import { auth, db } from "../config/firebase.js";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -8,6 +8,7 @@ import {
   updatePassword,
   updateEmail,
 } from "firebase/auth";
+import { setDoc, getDoc, doc } from "firebase/firestore";
 
 const AuthContext = createContext();
 
@@ -23,8 +24,14 @@ export function AuthProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password);
   }
 
-  function signUp(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password);
+  async function signUp(user_name, email, password) {
+    createUserWithEmailAndPassword(auth, email, password);
+    try {
+      var ref = await doc(db, email, "username");
+      setDoc(ref, { username: user_name });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   function logOut() {

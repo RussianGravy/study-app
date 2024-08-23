@@ -138,7 +138,7 @@ export function HomePage() {
           setModalToggle(true);
         }}
       />
-      <div className="pt-20 pb-24 w-screen h-fit flex flex-row flex-wrap">
+      <div className="pt-20 pb-20 w-screen h-fit flex flex-row flex-wrap">
         <UserDisplay />
         <DeckDisplay decks={decks} />
         <FriendDisplay />

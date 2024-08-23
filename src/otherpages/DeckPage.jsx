@@ -265,7 +265,7 @@ export function DeckPage() {
         {deckValues.currentDeck}
       </h1>
       <div
-        className="pb-24 px-0 flex flex-row flex-wrap mx-auto"
+        className="pb-28 px-0 flex flex-row flex-wrap mx-auto"
         style={{ width: containerWidth }}
       >
         {cardList.length == 0 ? (

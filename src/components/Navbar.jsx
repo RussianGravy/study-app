@@ -13,8 +13,11 @@ export function Navbar() {
   return (
     <div className="w-screen h-14 flex flex-row bg-gray-300 fixed z-40 border-b-2 border-gray-400">
       <div className="flex grow items-center p-0">
-        <h1 className="w-fit mx-5 text-2xl portrait:text-lg items-center">
-          {temp.currentUser.email}
+        <h1 className="w-fit ml-4 text-xl portrait:text-lg items-center">
+          your
+        </h1>
+        <h1 className="text-2xl ml-1 portrait:text-xl items-center font-serif">
+          Social Study-App
         </h1>
       </div>
       <div id="dropdown" className="flex flex-col h-14 overflow-hidden">
@@ -26,13 +29,19 @@ export function Navbar() {
             onClick={() => {
               navigate("/");
             }}
-            className="bg-blue-600 text-white text-2xl portrait:text-lg py-3 w-28"
+            className="bg-blue-600 hover:bg-blue-500 text-white text-2xl portrait:text-lg py-3 w-28"
           >
             Decks
           </button>
           <button
+            onClick={() => {}}
+            className="bg-blue-600 hover:bg-blue-500 text-white text-2xl portrait:text-lg py-3 w-28"
+          >
+            Profile
+          </button>
+          <button
             onClick={temp.logOut}
-            className="bg-blue-600 text-white text-2xl portrait:text-lg py-3 w-28"
+            className="bg-blue-600 hover:bg-blue-500 text-white text-2xl portrait:text-lg py-3 w-28"
           >
             Log Out
           </button>

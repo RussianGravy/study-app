@@ -6,6 +6,7 @@ import { auth, googleProvider } from "../config/firebase.js";
 import { useAuth } from "../contexts/AuthContext.js";
 
 export function SignUpPage() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -17,7 +18,7 @@ export function SignUpPage() {
       return;
     }
     try {
-      await temp.signUp(email, password);
+      await temp.signUp(username, email, password);
       navigate("/");
     } catch (err) {
       console.error(err);
@@ -28,6 +29,15 @@ export function SignUpPage() {
       <div className="w-max h-max self-center m-auto flex flex-col">
         <h1 className=" text-5xl self-center mb-4">Sign Up</h1>
         <div className="h-max w-max flex flex-col bg-slate-200 px-8 py-3 rounded-lg">
+          <input
+            className="my-3 outline"
+            type="username"
+            placeholder="Username..."
+            required
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          />
           <input
             className="my-3 outline"
             type="email"
