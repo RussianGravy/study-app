@@ -15,7 +15,7 @@ export function Deck({ title, subject, selectFunction }) {
   } // end of getAngle
   return (
     <div
-      className="w-fit h-fit mx-5 my-14 p-3 relative hover:cursor-pointer"
+      className="w-fit h-fit mx-8 portrait:ml-0 portrait:mr-20 my-14 p-3 relative hover:cursor-pointer"
       onClick={selectFunction}
     >
       <div

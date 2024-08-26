@@ -34,12 +34,12 @@ export function FriendDisplay() {
   }, []);
 
   return (
-    <div className="w-full h-fit flex flex-col mt-10 p-10">
-      <h1 className="text-white text-5xl mt-10">Friends</h1>
+    <div className="w-full h-fit flex flex-col p-7">
+      <h1 className="text-white text-5xl ">Friends</h1>
       {users.length > 0 ? (
-        <div className="h-fit rounded-lg bg-gray-600 text-gray-300  mt-8 text-4xl text-center">
+        <div className="w-full h-fit rounded-lg bg-gray-600 text-gray-300  mt-8 text-4xl text-center flex flex-row  overflow-x-scroll">
           {users.map((user) => {
-            return userIcon(user);
+            return <UserIcon username={user} key={user} />;
           })}
         </div>
       ) : (
@@ -51,10 +51,13 @@ export function FriendDisplay() {
   );
 }
 
-function userIcon({ username }) {
+function UserIcon({ username }) {
   return (
-    <div className="w-40 h-40 rounded-full bg-blue-500 m-4 flex">
-      <h1 className="text-white m-auto">{username}</h1>
+    <div className="w-max h-fit py-5 px-3">
+      <div className="w-40 h-40 rounded-full outline outline-gray-400 bg-blue-500 mt-4 mx-auto flex">
+        <h2 className="m-auto text-6xl">{username.slice(0, 1)}</h2>
+      </div>
+      <h2 className="text-white mt-3 mx-auto text-xl">{username}</h2>
     </div>
   );
 }

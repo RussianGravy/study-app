@@ -32,8 +32,7 @@ export function AuthProvider({ children }) {
       setDoc(ref, { username: user_name });
       //store user globally
       var docRef = await doc(db, "global_data", "users");
-      var oldData = (await getDoc(docRef)).data();
-      setDoc();
+      var oldData = (await getDoc(docRef)).data().users;
     } catch (err) {
       console.error(err);
     }
