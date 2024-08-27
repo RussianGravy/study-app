@@ -34,7 +34,9 @@ export function Navbar() {
             Decks
           </button>
           <button
-            onClick={() => {}}
+            onClick={() => {
+              navigate("/profile");
+            }}
             className="bg-blue-600 hover:bg-blue-500 text-white text-2xl portrait:text-lg py-3 w-28"
           >
             Profile
