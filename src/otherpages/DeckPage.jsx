@@ -11,6 +11,7 @@ import {
 } from "../components/CreateCardButton.jsx";
 import { auth, googleProvider, db } from "../config/firebase.js";
 import {
+  getDoc,
   getDocs,
   collection,
   addDoc,
@@ -31,6 +32,10 @@ export function DeckPage() {
   );
   const [toggle, setToggle] = useState(false);
   const [modalContent, setModalContent] = useState(<></>);
+  const [defaultValues, setDefaultValues] = useState({
+    topic: "",
+    content: "",
+  });
   const modalVariables = { id: null };
   const temp = useAuth();
   const deckValues = useDeck();
@@ -89,14 +94,17 @@ export function DeckPage() {
 
   const deleteCard = async (id) => {
     setModalContent(DeleteMenu);
-    await setToggle(true);
     modalVariables.id = id;
+    await setToggle(true);
   };
 
   const updateCard = async (id) => {
     setModalContent(EditMenu);
-    await setToggle(true);
     modalVariables.id = id;
+    const ref = doc(db, collectionPath + "/" + id);
+    const card = (await getDoc(ref)).data();
+    setDefaultValues({ topic: card.title, content: card.content });
+    setToggle(true);
   };
 
   const DeleteMenu = (
@@ -107,8 +115,6 @@ export function DeckPage() {
           onClick={async () => {
             await setToggle(false);
             modalVariables.id = null;
-            modalVariables.topic = null;
-            modalVariables.content = null;
           }}
           className="text-white text-xl w-fit px-1 rounded bg-red-600"
         >
@@ -147,8 +153,6 @@ export function DeckPage() {
           onClick={async () => {
             await setToggle(false);
             modalVariables.id = null;
-            modalVariables.topic = null;
-            modalVariables.content = null;
           }}
           className="text-white text-xl w-fit px-1 rounded bg-red-600"
         >
@@ -160,6 +164,7 @@ export function DeckPage() {
         <input
           type="text"
           placeholder="topic"
+          defaultValue={defaultValues.topic}
           className="w-fit mb-4 text-3xl rounded-xl"
           onChange={(e) => {
             updatedTopic = e.target.value;
@@ -169,6 +174,7 @@ export function DeckPage() {
         <input
           type="text"
           placeholder="content"
+          defaultValue={defaultValues.content}
           className="w-fit mb-4 text-3xl rounded-xl"
           onChange={(e) => {
             updatedContent = e.target.value;
@@ -180,8 +186,6 @@ export function DeckPage() {
           const cardDoc = doc(db, collectionPath, modalVariables.id);
           updateDoc(cardDoc, { title: updatedTopic, content: updatedContent });
           modalVariables.id = null;
-          modalVariables.topic = null;
-          modalVariables.content = null;
           await getCardList();
           setToggle(false);
         }}
@@ -200,8 +204,6 @@ export function DeckPage() {
           onClick={async () => {
             await setToggle(false);
             modalVariables.id = null;
-            modalVariables.topic = null;
-            modalVariables.content = null;
           }}
           className="text-white text-xl w-fit px-1 rounded bg-red-600"
         >
