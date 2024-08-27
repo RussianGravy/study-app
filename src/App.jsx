@@ -5,6 +5,7 @@ import { LoginPage } from "./otherpages/LoginPage.jsx";
 import { HomePage } from "./otherpages/HomePage.jsx";
 import { DeckPage } from "./otherpages/DeckPage.jsx";
 import { SignUpPage } from "./otherpages/SignUpPage.jsx";
+import { ProfilePage } from "./otherpages/ProfilePage.jsx";
 import TestPage from "./otherpages/TestPage.jsx";
 import { auth, googleProvider, db } from "./config/firebase.js";
 //temp
@@ -32,6 +33,11 @@ function App() {
                   exact
                   path="/deck"
                   element={<PrivateRoute Component={DeckPage} />}
+                />
+                <Route
+                  exact
+                  path="/profile"
+                  element={<PrivateRoute Component={ProfilePage} />}
                 />
 
                 <Route path="/signup" Component={SignUpPage} />
