@@ -25,8 +25,6 @@ export function FriendDisplay() {
     var docRef = doc(db, userPair[1], "username");
     var username = (await getDoc(docRef)).data().username;
     tempUsers.push(username);
-    console.log("all friends " + tempUsers);
-    console.log("possible friend: " + username);
   }
 
   useEffect(() => {
