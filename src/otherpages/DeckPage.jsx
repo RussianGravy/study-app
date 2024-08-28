@@ -5,6 +5,11 @@ import { useState } from "react";
 import { Navbar } from "../components/Navbar.jsx";
 import { Card } from "../components/Card.jsx";
 import {
+  EditMenu,
+  DeleteMenu,
+  NewCardMenu,
+} from "../components/DeckMenuModals.jsx";
+import {
   CreateCardButton,
   newContent,
   newTopic,
@@ -29,14 +34,13 @@ export function DeckPage() {
   const [cardList, setCardList] = useState([]);
   const [containerWidth, setContainerWidth] = useState(
     window.innerWidth - (window.innerWidth % 360) + "px"
-  );
-  const [toggle, setToggle] = useState(false);
+  ); // width for cards div
+  const [toggle, setToggle] = useState(false); //modal toggle
   const [modalContent, setModalContent] = useState(<></>);
   const [defaultValues, setDefaultValues] = useState({
-    topic: "",
-    content: "",
-  });
-  const modalVariables = { id: null };
+    topic: null,
+    content: null,
+  }); //values for updateCard modal
   const temp = useAuth();
   const deckValues = useDeck();
   const navigate = useNavigate();
@@ -88,167 +92,67 @@ export function DeckPage() {
   }, [toggle]);
 
   const submitCard = async () => {
-    setModalContent(NewCardMenu);
+    setModalContent(
+      <NewCardMenu
+        closeFunction={() => {
+          setToggle(false);
+        }}
+        createFunction={(topic, content) => {
+          setDoc(doc(db, collectionPath, "/" + cardList.length), {
+            title: topic,
+            content: content,
+            userId: auth?.currentUser?.uid,
+          });
+          getCardList();
+          setToggle(false);
+        }}
+      />
+    );
     await setToggle(true);
   };
 
   const deleteCard = async (id) => {
-    setModalContent(DeleteMenu);
-    modalVariables.id = id;
+    setModalContent(
+      <DeleteMenu
+        deleteFunction={() => {
+          const cardDoc = doc(db, collectionPath, id);
+          deleteDoc(cardDoc);
+          try {
+            getCardList();
+          } catch (err) {
+            console.error(err);
+          } finally {
+            setToggle(false);
+          }
+        }}
+        closeFunction={() => {
+          setToggle(false);
+        }}
+      />
+    );
     await setToggle(true);
   };
 
   const updateCard = async (id) => {
-    setModalContent(EditMenu);
-    modalVariables.id = id;
     const ref = doc(db, collectionPath + "/" + id);
     const card = (await getDoc(ref)).data();
-    setDefaultValues({ topic: card.title, content: card.content });
+    setModalContent(
+      <EditMenu
+        defaultTopic={card.title}
+        defaultContent={card.content}
+        updateFunction={async (topic, content) => {
+          const cardDoc = doc(db, collectionPath, id);
+          updateDoc(cardDoc, { title: topic, content: content });
+          await getCardList();
+          setToggle(false);
+        }}
+        closeFunction={() => {
+          setToggle(false);
+        }}
+      />
+    );
     setToggle(true);
   };
-
-  const DeleteMenu = (
-    <div className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-fit p-3 rounded-lg border-2 border-black relative overflow-hidden">
-      <div className="text-5xl h-7 w-full self-center flex z-30">
-        <p className="grow text-2xl">Deleting Card</p>
-        <button
-          onClick={async () => {
-            await setToggle(false);
-            modalVariables.id = null;
-          }}
-          className="text-white text-xl w-fit px-1 rounded bg-red-600"
-        >
-          Cancel
-        </button>
-      </div>
-      <div className="w-fit mx-auto my-8 text-xl">
-        Are you Sure?{" "}
-        <button
-          className="text-blue-600"
-          onClick={async () => {
-            const cardDoc = doc(db, collectionPath, modalVariables.id);
-            deleteDoc(cardDoc);
-            try {
-              await getCardList();
-            } catch (err) {
-              console.error(err);
-            } finally {
-              setToggle(false);
-            }
-          }}
-        >
-          Yes
-        </button>
-      </div>
-    </div>
-  ); //end of DeleteCard
-
-  var updatedTopic;
-  var updatedContent;
-  const EditMenu = (
-    <div className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-fit p-3 rounded-lg border-2 border-black relative overflow-hidden">
-      <div className="text-5xl h-7 w-full self-center flex z-30">
-        <p className="grow text-2xl">Editing Card</p>
-        <button
-          onClick={async () => {
-            await setToggle(false);
-            modalVariables.id = null;
-          }}
-          className="text-white text-xl w-fit px-1 rounded bg-red-600"
-        >
-          Cancel
-        </button>
-      </div>
-      <div className="mt-8 flex flex-wrap w-full">
-        <h1>Topic</h1>
-        <input
-          type="text"
-          placeholder="topic"
-          defaultValue={defaultValues.topic}
-          className="w-fit mb-4 text-3xl rounded-xl"
-          onChange={(e) => {
-            updatedTopic = e.target.value;
-          }}
-        />
-        <h1>Content</h1>
-        <input
-          type="text"
-          placeholder="content"
-          defaultValue={defaultValues.content}
-          className="w-fit mb-4 text-3xl rounded-xl"
-          onChange={(e) => {
-            updatedContent = e.target.value;
-          }}
-        />
-      </div>
-      <button
-        onClick={async () => {
-          const cardDoc = doc(db, collectionPath, modalVariables.id);
-          updateDoc(cardDoc, { title: updatedTopic, content: updatedContent });
-          modalVariables.id = null;
-          await getCardList();
-          setToggle(false);
-        }}
-        className="bg-blue-600 text-white mx-auto py-1 px-7"
-      >
-        Update
-      </button>
-    </div>
-  ); //end of UpdateCard
-
-  const NewCardMenu = (
-    <div className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-96 p-3 rounded-lg border-2 border-black relative overflow-hidden">
-      <div className="text-5xl h-7 w-full self-center flex z-30">
-        <p className="grow text-2xl">New Card</p>
-        <button
-          onClick={async () => {
-            await setToggle(false);
-            modalVariables.id = null;
-          }}
-          className="text-white text-xl w-fit px-1 rounded bg-red-600"
-        >
-          Cancel
-        </button>
-      </div>
-      <div className="flex flex-wrap w-full">
-        <div className="mx-1 my-9 w-fit">
-          <input
-            type="text"
-            placeholder=" topic"
-            className="w-11/12 text-5xl rounded-xl mb-2"
-            onChange={(e) => {
-              updatedTopic = e.target.value;
-            }}
-          ></input>
-          <input
-            type="text"
-            placeholder=" content"
-            className="w-11/12 max-w-fit  text-3xl rounded-xl"
-            onChange={(e) => {
-              updatedContent = e.target.value;
-            }}
-          ></input>
-        </div>
-      </div>
-      <button
-        onClick={async () => {
-          await setDoc(doc(db, collectionPath, cardList.length + ""), {
-            title: updatedTopic,
-            content: updatedContent,
-            userId: auth?.currentUser?.uid,
-          });
-          modalVariables.id = null;
-          modalVariables.topic = null;
-          modalVariables.content = null;
-          await getCardList();
-          setToggle(false);
-        }}
-        className="bg-blue-600 text-white mx-auto py-1 px-7"
-      >
-        Create
-      </button>
-    </div>
-  ); //end of NewCard
 
   window.addEventListener("resize", () => {
     setContainerWidth(window.innerWidth - (window.innerWidth % 360) + "px");
@@ -258,15 +162,16 @@ export function DeckPage() {
     <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500 flex flex-col">
       <Navbar></Navbar>
       <CreateCardButton submitFunction={submitCard}></CreateCardButton>
-      <h1 className="text-white text-5xl pt-20 ml-10">
-        {deckValues.currentDeck}
-      </h1>
+      <div className="pt-20 w-11/12 flex flex-nowrap mx-auto">
+        <h1 className="text-white text-5xl grow">{deckValues.currentDeck}</h1>
+        <button className="w-10 aspect-square bg-slate-700 rounded-xl self-center"></button>
+      </div>
       <div
         className="pb-28 px-0 flex flex-row flex-wrap mx-auto"
         style={{ width: containerWidth }}
       >
         {cardList.length == 0 ? (
-          <h1 className="text-gray-200 text-3xl text-center m-auto mt-10 leading-relaxed">
+          <h1 className="text-gray-200 text-3xl text-center m-auto mt-20 leading-relaxed">
             No cards to display! Press the 'plus' in the bottom right to add
             your first card.
           </h1>
