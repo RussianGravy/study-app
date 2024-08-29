@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { useState } from "react";
 import { get } from "firebase/database";
 import edit_icon from "../assets/edit_icon.png";
+import flip_icon from "../assets/flip_icon.png";
 
 export function Card({ topic, content, deleteFunction, updateFunction }) {
+  const [toggle, setToggle] = useState(false);
   return (
     <div
       className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-96 p-3 rounded-lg border-2 border-black relative overflow-hidden"
@@ -23,9 +24,20 @@ export function Card({ topic, content, deleteFunction, updateFunction }) {
         >
           <img src={edit_icon} className="w-full" />
         </button>
+        <button
+          className="text-slate-700 font-bold text-3xl w-7 h-7 mr-auto ml-2 rounded-full flex items-center justify-center"
+          onClick={() => {
+            setToggle(!toggle);
+          }}
+        >
+          <img src={flip_icon} className="w-full" />
+        </button>
       </div>
-      <h1 className=" text-4xl">{topic}</h1>
-      <p className=" text-2xl text-gray-700">{content}</p>
+      {toggle ? (
+        <p className=" text-2xl text-gray-700 mx-auto my-14">{content}</p>
+      ) : (
+        <h1 className="text-4xl text-center mx-auto my-14">{topic}</h1>
+      )}
     </div>
   );
 }
