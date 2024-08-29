@@ -33,7 +33,7 @@ export function FriendDisplay() {
   }, []);
 
   return (
-    <div className="w-full h-fit flex flex-col p-7">
+    <div className="w-full h-fit flex flex-col p-7 z-20">
       <h1 className="text-white text-5xl ">Friends</h1>
       {users.length > 0 ? (
         <div className="w-full h-fit rounded-lg bg-gray-600 text-gray-300  mt-8 text-4xl text-center flex flex-row  overflow-x-hidden">

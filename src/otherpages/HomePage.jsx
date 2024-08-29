@@ -18,6 +18,7 @@ import {
 import { auth, googleProvider, db } from "../config/firebase.js";
 import { useAuth } from "../contexts/AuthContext";
 import { useDeck } from "../contexts/DeckContext.js";
+import backgroundImage from "../assets/background.png";
 import styles from "../components/custom_css/global.module.css";
 
 export function HomePage() {
@@ -128,11 +129,11 @@ export function HomePage() {
   ); //end of Create Deck;
 
   return (
-    <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500">
-      <img
-        className="absolute top-0 left-0 w-full h-full"
-        src="../public/background.png"
-      />
+    <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500 ">
+      <div className="w-screen h-screen overflow-hidden absolute top-0 left-0 z-0 opacity-25">
+        <img className="h-full w-full aspect-auto" src={backgroundImage} />
+      </div>
+
       <Navbar />
       <Modal toggle={modalToggle}>{CreateDeck}</Modal>
       <CreateCardButton
@@ -143,7 +144,7 @@ export function HomePage() {
       <div className="pt-20 pb-20 w-screen h-fit flex flex-row flex-wrap">
         <UserDisplay />
         <DeckDisplay decks={decks} />
-        <FriendDisplay />
+        {/* <FriendDisplay /> */}
       </div>
     </div>
   );

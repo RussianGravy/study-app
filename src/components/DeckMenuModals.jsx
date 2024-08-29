@@ -47,26 +47,26 @@ export function EditMenu({
           Cancel
         </button>
       </div>
+      {/* TOPIC input ~ ~ ~ ~ */}
       <div className="mt-8 flex flex-wrap w-full">
-        {/* <h1 className="mb-2 text-2xl text-gray-500">Topic</h1> */}
         <textarea
           ref={topicRef}
           type="text"
           placeholder="topic"
           defaultValue={topic}
-          className="w-72 h-fit max-h-40 mb-4 p-1 text-4xl rounded-md text-wrap resize-none bg-slate-100 outline outline-2 outline-slate-400"
+          className="w-72 h-fit max-h-40 mb-4 p-1 text-4xl text-gray-800 rounded-md text-wrap resize-none bg-slate-100 outline outline-2 outline-slate-400"
           onChange={(e) => {
             topic = e.target.value;
             setInputHeights(topic);
           }}
         />
-        {/* <h1 className="mb-2 text-2xl text-gray-500">Content</h1> */}
+        {/* CONTENT input ~ ~ ~ ~ */}
         <textarea
           ref={contentRef}
           type="text"
           placeholder="content"
           defaultValue={content}
-          className="w-72 h-fit max-h-40 mb-4 p-1 text-2xl rounded-md text-wrap resize-none bg-slate-100 outline outline-2 outline-slate-400"
+          className="w-72 h-fit max-h-40 mb-4 p-1 text-3xl text-gray-800 rounded-md text-wrap resize-none bg-slate-100 outline outline-2 outline-slate-400"
           onChange={(e) => {
             content = e.target.value;
             setInputHeights();
@@ -83,7 +83,7 @@ export function EditMenu({
       </button>
     </div>
   );
-}
+} //end of edit menu
 
 export function NewCardMenu({ createFunction, closeFunction }) {
   // input style variables:
@@ -149,7 +149,7 @@ export function NewCardMenu({ createFunction, closeFunction }) {
       </button>
     </div>
   );
-}
+} //end of create menu
 
 export function DeleteMenu({ deleteFunction, closeFunction }) {
   return (
@@ -178,4 +178,4 @@ export function DeleteMenu({ deleteFunction, closeFunction }) {
       </div>
     </div>
   );
-}
+} //end of delete menu
