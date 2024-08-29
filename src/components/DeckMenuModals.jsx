@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export function EditMenu({
   defaultTopic,
@@ -6,6 +6,32 @@ export function EditMenu({
   updateFunction,
   closeFunction,
 }) {
+  // input style variables:
+  const [topicInputHeight, setTopicInputHeight] = useState(0);
+  const [contentInputHeight, setContentInputHeight] = useState(0);
+  const topicRef = useRef(null);
+  const contentRef = useRef(null);
+  // dynamically grow input box
+  function setInputHeights(x = "") {
+    topicRef.current.style.height = topicRef.current.scrollHeight + "px";
+    console.log(
+      "topic: " +
+        topicRef.current.scrollHeight +
+        ", rows: " +
+        topicRef.current.rows +
+        ", cols: " +
+        topicRef.current.cols
+    );
+    contentRef.current.style.height = contentRef.current.scrollHeight + "px";
+    //testy bulshit below (using topic)
+    const TOPIC_COL_CHAR_RATIO = 20 / 16;
+    var temp = (x.length * TOPIC_COL_CHAR_RATIO) / 20 + 0.5;
+    console.log(Math.floor(temp));
+  }
+  useEffect(() => {
+    setInputHeights();
+  }, []);
+  // update variables:
   var topic = defaultTopic;
   var content = defaultContent;
   return (
@@ -22,24 +48,28 @@ export function EditMenu({
         </button>
       </div>
       <div className="mt-8 flex flex-wrap w-full">
-        <h1>Topic</h1>
-        <input
+        {/* <h1 className="mb-2 text-2xl text-gray-500">Topic</h1> */}
+        <textarea
+          ref={topicRef}
           type="text"
           placeholder="topic"
           defaultValue={topic}
-          className="w-fit mb-4 text-3xl rounded-xl"
+          className="w-72 h-fit max-h-40 mb-4 p-1 text-4xl rounded-md text-wrap resize-none bg-slate-100 outline outline-2 outline-slate-400"
           onChange={(e) => {
             topic = e.target.value;
+            setInputHeights(topic);
           }}
         />
-        <h1>Content</h1>
-        <input
+        {/* <h1 className="mb-2 text-2xl text-gray-500">Content</h1> */}
+        <textarea
+          ref={contentRef}
           type="text"
           placeholder="content"
           defaultValue={content}
-          className="w-fit mb-4 text-3xl rounded-xl"
+          className="w-72 h-fit max-h-40 mb-4 p-1 text-2xl rounded-md text-wrap resize-none bg-slate-100 outline outline-2 outline-slate-400"
           onChange={(e) => {
             content = e.target.value;
+            setInputHeights();
           }}
         />
       </div>
@@ -47,7 +77,7 @@ export function EditMenu({
         onClick={async () => {
           updateFunction(topic, content);
         }}
-        className="bg-blue-600 text-white mx-auto py-1 px-7"
+        className="bg-blue-600 text-white mx-auto py-1 px-7 rounded-lg"
       >
         Update
       </button>
@@ -56,6 +86,20 @@ export function EditMenu({
 }
 
 export function NewCardMenu({ createFunction, closeFunction }) {
+  // input style variables:
+  const [topicInputHeight, setTopicInputHeight] = useState(0);
+  const [contentInputHeight, setContentInputHeight] = useState(0);
+  const topicRef = useRef(null);
+  const contentRef = useRef(null);
+  // dynamically grow input box
+  function setInputHeights() {
+    topicRef.current.style.height = topicRef.current.scrollHeight + "px";
+    contentRef.current.style.height = contentRef.current.scrollHeight + "px";
+  }
+  useEffect(() => {
+    setInputHeights();
+  }, []);
+  // input variables
   var topic = "";
   var content = "";
   return (
@@ -73,29 +117,33 @@ export function NewCardMenu({ createFunction, closeFunction }) {
       </div>
       <div className="flex flex-wrap w-full">
         <div className="mx-1 my-9 w-fit">
-          <input
+          <textarea
+            ref={topicRef}
             type="text"
-            placeholder=" topic"
-            className="w-11/12 h-fit text-5xl rounded-xl mb-2 text-wrap"
+            placeholder="topic"
+            className="w-72 max-h-40 text-5xl p-2 rounded-xl mb-2 text-wrap resize-none bg-slate-100 outline outline-2 outline-slate-400"
             onChange={(e) => {
               topic = e.target.value;
+              setInputHeights();
             }}
-          ></input>
-          <input
+          />
+          <textarea
+            ref={contentRef}
             type="text"
-            placeholder=" content"
-            className="w-11/12 max-w-fit  text-3xl rounded-xl"
+            placeholder="content"
+            className="w-72 max-h-40 max-w-fit p-2 text-3xl rounded-xl resize-none bg-slate-100 outline outline-2 outline-slate-400"
             onChange={(e) => {
               content = e.target.value;
+              setInputHeights();
             }}
-          ></input>
+          />
         </div>
       </div>
       <button
         onClick={async () => {
           createFunction(topic, content);
         }}
-        className="bg-blue-600 text-white mx-auto py-1 px-7"
+        className="bg-blue-600 text-white mx-auto py-1 px-7 rounded-md"
       >
         Create
       </button>

@@ -87,6 +87,7 @@ export function DeckPage() {
     }
     // Set card list
   };
+
   useEffect(() => {
     getCardList();
   }, [toggle]);
@@ -103,7 +104,6 @@ export function DeckPage() {
             content: content,
             userId: auth?.currentUser?.uid,
           });
-          getCardList();
           setToggle(false);
         }}
       />
@@ -143,7 +143,6 @@ export function DeckPage() {
         updateFunction={async (topic, content) => {
           const cardDoc = doc(db, collectionPath, id);
           updateDoc(cardDoc, { title: topic, content: content });
-          await getCardList();
           setToggle(false);
         }}
         closeFunction={() => {

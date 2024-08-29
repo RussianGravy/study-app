@@ -15,7 +15,7 @@ export function DeckDisplay({ decks }) {
   return (
     <div className="bg-gray-600 h-fit min-h-96 w-7/12 portrait:w-11/12 rounded-lg relative mx-auto">
       <h1 className="text-white text-5xl mt-5 ml-10">Your Decks</h1>
-      <div className="w-full h-max pl-8 portrait:pl-0 flex flex-row flex-nowrap overflow-x-scroll">
+      <div className="w-full h-max pl-8 portrait:pl-2 flex flex-row flex-nowrap overflow-x-scroll">
         {decks.length > 0 ? (
           decks.split(",").map((name) => {
             return (

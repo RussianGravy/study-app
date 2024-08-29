@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { db } from "../config/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import { doc, getDoc, collection } from "firebase/firestore";
@@ -35,14 +36,14 @@ export function FriendDisplay() {
     <div className="w-full h-fit flex flex-col p-7">
       <h1 className="text-white text-5xl ">Friends</h1>
       {users.length > 0 ? (
-        <div className="w-full h-fit rounded-lg bg-gray-600 text-gray-300  mt-8 text-4xl text-center flex flex-row  overflow-x-scroll">
+        <div className="w-full h-fit rounded-lg bg-gray-600 text-gray-300  mt-8 text-4xl text-center flex flex-row  overflow-x-hidden">
           {users.map((user) => {
             return <UserIcon username={user} key={user} />;
           })}
         </div>
       ) : (
         <h2 className="h-fit rounded-lg bg-gray-600 text-gray-300  mt-8 text-4xl text-center">
-          No users to friend.
+          Error getting users to friend...
         </h2>
       )}
     </div>
@@ -50,11 +51,17 @@ export function FriendDisplay() {
 }
 
 function UserIcon({ username }) {
+  const navigate = useNavigate();
   return (
     <div className="w-max h-fit py-5 px-3">
-      <div className="w-40 h-40 rounded-full outline outline-gray-400 bg-blue-500 mt-4 mx-auto flex">
+      <button
+        className="w-40 h-40 rounded-full outline outline-gray-400 bg-blue-600 mt-4 mx-auto flex"
+        onClick={() => {
+          navigate("/profile");
+        }}
+      >
         <h2 className="m-auto text-6xl">{username.slice(0, 1)}</h2>
-      </div>
+      </button>
       <h2 className="text-white mt-3 mx-auto text-xl">{username}</h2>
     </div>
   );

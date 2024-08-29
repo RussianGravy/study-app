@@ -25,7 +25,7 @@ export function UserDisplay() {
   return (
     <div className="min-w-96 w-4/12 h-4/12 bg-gray-600 rounded-lg mx-auto portrait:mb-7  flex flex-col">
       <div className="w-fit flex flex-row items-center m-5">
-        <div className="h-full aspect-square rounded-full outline outline-gray-800 bg-green-500"></div>
+        <div className="h-full aspect-square rounded-full outline outline-gray-800 bg-blue-600"></div>
         <h2 className="text-white text-4xl text-nowrap w-fit ml-3">
           {username}
         </h2>

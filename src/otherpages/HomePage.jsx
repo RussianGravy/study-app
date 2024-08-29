@@ -129,6 +129,10 @@ export function HomePage() {
 
   return (
     <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500">
+      <img
+        className="absolute top-0 left-0 w-full h-full"
+        src="../public/background.png"
+      />
       <Navbar />
       <Modal toggle={modalToggle}>{CreateDeck}</Modal>
       <CreateCardButton
