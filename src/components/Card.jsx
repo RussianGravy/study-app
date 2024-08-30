@@ -10,7 +10,7 @@ export function Card({ topic, content, deleteFunction, updateFunction }) {
   return (
     <div className="w-max h-max mainContainer mx-5 my-14">
       <div
-        className={"w-80 h-96" + (!toggle ? " showingBack" : " showingFront")}
+        className={"w-80 h-96" + (toggle ? " showingBack" : " showingFront")}
       >
         <Front
           topic={topic}
