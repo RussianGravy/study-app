@@ -86,24 +86,23 @@ export function EditMenu({
 } //end of edit menu
 
 export function NewCardMenu({ createFunction, closeFunction }) {
+  const [topic, setTopic] = useState("");
+  const [content, setContent] = useState("");
+  const [toggle, setToggle] = useState(false);
   // input style variables:
-  const [topicInputHeight, setTopicInputHeight] = useState(0);
-  const [contentInputHeight, setContentInputHeight] = useState(0);
   const topicRef = useRef(null);
   const contentRef = useRef(null);
   // dynamically grow input box
-  function setInputHeights() {
-    topicRef.current.style.height = topicRef.current.scrollHeight + "px";
-    contentRef.current.style.height = contentRef.current.scrollHeight + "px";
+  function setInputHeights(box) {
+    if (box === "topic")
+      topicRef.current.style.height = topicRef.current.scrollHeight + "px";
+    else
+      contentRef.current.style.height = contentRef.current.scrollHeight + "px";
   }
-  useEffect(() => {
-    setInputHeights();
-  }, []);
-  // input variables
-  var topic = "";
-  var content = "";
+
   return (
-    <div className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-96 p-3 rounded-lg border-2 border-black relative overflow-hidden">
+    <div className="bg-slate-300 rounded-lg border-2 border-black w-fit h-fit min-h-96 my-14 p-3 flex flex-col relative">
+      {/*  ~ ~ ~ ~ ~ ~ ~ ~ ~ Beginning of Header Buttons ~ ~ ~ ~ ~ ~ ~ ~ ~ */}
       <div className="text-5xl h-7 w-full self-center flex z-30">
         <p className="grow text-2xl">New Card</p>
         <button
@@ -115,38 +114,62 @@ export function NewCardMenu({ createFunction, closeFunction }) {
           Cancel
         </button>
       </div>
-      <div className="flex flex-wrap w-full">
-        <div className="mx-1 my-9 w-fit">
+      {/*  ~ ~ ~ ~ ~ ~ ~ ~ ~ Beginning of Input Fields ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */}
+      <div className="w-full h-fit my-10 flex flex-row flex-nowrap">
+        {!toggle ? (
           <textarea
             ref={topicRef}
             type="text"
-            placeholder="topic"
-            className="w-72 max-h-40 text-5xl p-2 rounded-xl mb-2 text-wrap resize-none bg-slate-100 outline outline-2 outline-slate-400"
+            placeholder="Front ... "
+            className="w-72 h-12 max-h-64 p-2 mx-5 text-3xl text-wrap resize-none bg-transparent border-slate-500 border-b-2"
             onChange={(e) => {
-              topic = e.target.value;
-              setInputHeights();
+              setTopic(e.target.value);
+              setInputHeights("topic");
             }}
           />
+        ) : (
           <textarea
             ref={contentRef}
             type="text"
-            placeholder="content"
-            className="w-72 max-h-40 max-w-fit p-2 text-3xl rounded-xl resize-none bg-slate-100 outline outline-2 outline-slate-400"
+            placeholder="Back ..."
+            className="w-72 h-12 max-h-64 p-2 mx-5 text-3xl text-wrap resize-none bg-transparent border-slate-500 border-b-2"
             onChange={(e) => {
-              content = e.target.value;
-              setInputHeights();
+              setContent(e.target.value);
+              setInputHeights("content");
             }}
           />
-        </div>
+        )}
       </div>
-      <button
-        onClick={async () => {
-          createFunction(topic, content);
-        }}
-        className="bg-blue-600 text-white mx-auto py-1 px-7 rounded-md"
-      >
-        Create
-      </button>
+      {/*  ~ ~ ~ ~ ~ ~ ~ ~ ~ End of Input Fields ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */}
+      {!toggle ? (
+        <button
+          onClick={async () => {
+            setToggle(!toggle);
+          }}
+          className="bg-blue-600 text-white w-52 mx-auto mt-20 py-1 rounded-md"
+        >
+          Next
+        </button>
+      ) : (
+        <div className="w-fit h-fit mx-auto mt-20 flex flex-col">
+          <button
+            onClick={async () => {
+              createFunction(topic, content);
+            }}
+            className="bg-blue-600 text-white w-52 py-1 rounded-md"
+          >
+            Create
+          </button>
+          <button
+            className="text-gray-600 text-sm rounded-md py-1 mx-auto mt-3 w-14"
+            onClick={() => {
+              setToggle(!toggle);
+            }}
+          >
+            Go Back
+          </button>
+        </div>
+      )}
     </div>
   );
 } //end of create menu
