@@ -120,6 +120,7 @@ export function NewCardMenu({ createFunction, closeFunction }) {
           <textarea
             ref={topicRef}
             type="text"
+            value={topic}
             placeholder="Front ... "
             className="w-72 h-12 max-h-64 p-2 mx-5 text-3xl text-wrap resize-none bg-transparent border-slate-500 border-b-2"
             onChange={(e) => {
@@ -131,6 +132,7 @@ export function NewCardMenu({ createFunction, closeFunction }) {
           <textarea
             ref={contentRef}
             type="text"
+            value={content}
             placeholder="Back ..."
             className="w-72 h-12 max-h-64 p-2 mx-5 text-3xl text-wrap resize-none bg-transparent border-slate-500 border-b-2"
             onChange={(e) => {
