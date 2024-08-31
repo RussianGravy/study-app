@@ -24,7 +24,7 @@ export default function Auth() {
       <div className="h-max w-max flex flex-col bg-slate-200 px-8 py-3 rounded-lg">
         <h1 className="text-4xl mb-2 m-auto">Sign In</h1>
         <input
-          className="my-3 outline"
+          className="my-3 px-1 outline rounded-sm"
           type="email"
           placeholder="Email..."
           onChange={(e) => {
@@ -32,7 +32,7 @@ export default function Auth() {
           }}
         ></input>
         <input
-          className="my-3 outline"
+          className="my-3 px-1 outline rounded-sm"
           type="password"
           placeholder="Password..."
           onChange={(e) => {
