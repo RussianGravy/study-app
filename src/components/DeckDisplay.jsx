@@ -15,18 +15,21 @@ export function DeckDisplay({ decks }) {
   return (
     <div className="bg-gray-600 h-fit min-h-96 w-7/12 portrait:w-11/12 rounded-lg relative mx-auto">
       <h1 className="text-white text-5xl mt-5 ml-10">Your Decks</h1>
-      <div className="w-full h-max pl-8 portrait:pl-2 flex flex-row flex-nowrap overflow-x-scroll">
+      <div className="w-full h-max pl-8 portrait:pl-2 flex flex-row flex-nowrap overflow-x-scroll snap-x snap-mandatory">
         {decks.length > 0 ? (
           decks.split(",").map((name) => {
             return (
-              <Deck
-                title={name}
-                subject={""}
-                selectFunction={() => {
-                  selectDeck(name);
-                }}
-                key={name}
-              ></Deck>
+              // Add SNAP Effect to deck scrolling
+              <section className="snap-start">
+                <Deck
+                  title={name}
+                  subject={""}
+                  selectFunction={() => {
+                    selectDeck(name);
+                  }}
+                  key={name}
+                />
+              </section>
             );
           })
         ) : (
@@ -36,7 +39,7 @@ export function DeckDisplay({ decks }) {
         )}
       </div>
       {decks.split(",").length > 1 ? (
-        <div className="absolute top-0 right-0 h-full w-16 portrait:w-8 rounded-lg from-transparent to-gray-800 bg-gradient-to-r"></div>
+        <div className="absolute top-0 right-0 h-full w-10 portrait:w-8 rounded-lg from-transparent to-gray-800 bg-gradient-to-r"></div>
       ) : (
         ""
       )}
