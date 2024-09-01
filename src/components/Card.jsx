@@ -91,7 +91,9 @@ function Back({ content, deleteFunction, updateFunction, toggleFunction }) {
           <img src={flip_icon} className="w-full" />
         </button>
       </div>
-      <p className=" text-2xl text-gray-700 mx-auto my-14 ">{content}</p>
+      <p className=" text-2xl text-gray-700 text-center mx-auto my-14 ">
+        {content}
+      </p>
     </div>
   );
 }
