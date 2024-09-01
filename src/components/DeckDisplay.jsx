@@ -20,14 +20,13 @@ export function DeckDisplay({ decks }) {
           decks.split(",").map((name) => {
             return (
               // Add SNAP Effect to deck scrolling
-              <section className="snap-start">
+              <section key={name} className="snap-start">
                 <Deck
                   title={name}
                   subject={""}
                   selectFunction={() => {
                     selectDeck(name);
                   }}
-                  key={name}
                 />
               </section>
             );
