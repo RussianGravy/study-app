@@ -134,7 +134,7 @@ export function HomePage() {
         <img className="h-full w-full aspect-auto" src={backgroundImage} />
       </div>
 
-      <Navbar />
+      <Navbar currentPage={"Home"} />
       <Modal toggle={modalToggle}>{CreateDeck}</Modal>
       <CreateCardButton
         submitFunction={() => {
