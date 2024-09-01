@@ -29,6 +29,7 @@ import { useAuth } from "../contexts/AuthContext.js";
 import { Modal } from "../components/Modal.jsx";
 import { useDeck } from "../contexts/DeckContext.js";
 import styles from "../components/custom_css/global.module.css";
+import settings_icon from "../assets/settings_icon.png";
 
 export function DeckPage() {
   const [cardList, setCardList] = useState([]);
@@ -162,8 +163,12 @@ export function DeckPage() {
       <Navbar></Navbar>
       <CreateCardButton submitFunction={submitCard}></CreateCardButton>
       <div className="pt-20 w-11/12 flex flex-nowrap mx-auto">
-        <h1 className="text-white text-5xl grow">{deckValues.currentDeck}</h1>
-        <button className="w-10 aspect-square bg-slate-700 rounded-xl self-center"></button>
+        <h1 className="text-white text-5xl portrait:text-3xl grow">
+          {deckValues.currentDeck}
+        </h1>
+        <button className="w-10 aspect-square bg-slate-700 rounded-xl self-center">
+          <img src={settings_icon} className="w-8 p-1 m-auto" />
+        </button>
       </div>
       <div
         className="pb-28 px-0 flex flex-row flex-wrap mx-auto"
