@@ -5,6 +5,7 @@ import { Auth } from "../components/Auth.jsx";
 import { useState } from "react";
 import { auth, googleProvider } from "../config/firebase.js";
 import { useAuth } from "../contexts/AuthContext.js";
+import main_logo_icon from "../assets/main_logo_icon.png";
 import menu_icon from "../assets/menu_icon.png";
 import "./custom_css/navbar.css";
 
@@ -14,10 +15,8 @@ export function Navbar({ currentPage }) {
   return (
     <div className="w-screen h-14 flex flex-row bg-gray-300 fixed z-40 border-b-2 border-gray-400">
       <div className="flex grow items-center p-0">
-        {/* <h1 className="w-fit ml-4 text-xl portrait:text-lg items-center">
-          your
-        </h1> */}
-        <h1 className="text-2xl ml-5 portrait:text-xl items-center font-serif">
+        <img src={main_logo_icon} className="w-10 ml-5 aspect-auto" />
+        <h1 className="text-2xl ml-2 portrait:text-xl items-center font-serif">
           Social Studies
         </h1>
       </div>
