@@ -100,7 +100,13 @@ export function DeckPage() {
           setToggle(false);
         }}
         createFunction={(topic, content) => {
-          setDoc(doc(db, collectionPath, "/" + cardList.length), {
+          const num = cardList.length + "";
+          const zero = "0";
+          const docName =
+            cardList.length >= 10
+              ? "A" + zero.repeat(4 - num.length) + num
+              : cardList.length;
+          setDoc(doc(db, collectionPath, "/" + docName), {
             title: topic,
             content: content,
             userId: auth?.currentUser?.uid,
@@ -110,7 +116,7 @@ export function DeckPage() {
       />
     );
     await setToggle(true);
-  };
+  }; //end of submit card
 
   const deleteCard = async (id) => {
     setModalContent(
@@ -132,7 +138,7 @@ export function DeckPage() {
       />
     );
     await setToggle(true);
-  };
+  }; //end of delete card
 
   const updateCard = async (id) => {
     const ref = doc(db, collectionPath + "/" + id);
@@ -152,7 +158,7 @@ export function DeckPage() {
       />
     );
     setToggle(true);
-  };
+  }; //end of updates card
 
   window.addEventListener("resize", () => {
     setContainerWidth(window.innerWidth - (window.innerWidth % 360) + "px");
