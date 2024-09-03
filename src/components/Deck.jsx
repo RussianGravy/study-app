@@ -12,7 +12,7 @@ export function Deck({ title, subject, selectFunction }) {
   } // end of getAngle
   return (
     <div
-      className="w-fit h-fit mx-8 my-14 p-3 relative" //portrait:ml-0 portrait:mr-20
+      className="w-fit h-fit p-3 relative" //portrait:ml-0 portrait:mr-20
       onClick={selectFunction}
     >
       <div
