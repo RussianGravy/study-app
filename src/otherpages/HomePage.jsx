@@ -130,10 +130,9 @@ export function HomePage() {
 
   return (
     <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500 ">
-      <div className="w-screen h-screen overflow-hidden absolute top-0 left-0 z-0 opacity-25">
+      <div className="w-screen h-screen overflow-hidden fixed top-0 left-0 z-0 opacity-25">
         <img className="h-full w-full aspect-auto" src={backgroundImage} />
       </div>
-
       <Navbar currentPage={"Home"} />
       <Modal toggle={modalToggle}>{CreateDeck}</Modal>
       <CreateCardButton
