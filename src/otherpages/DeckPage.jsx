@@ -8,12 +8,12 @@ import {
   EditMenu,
   DeleteMenu,
   NewCardMenu,
-} from "../components/DeckMenuModals.jsx";
+} from "../components/Menus.jsx";
 import {
-  CreateCardButton,
+  CreateButton,
   newContent,
   newTopic,
-} from "../components/CreateCardButton.jsx";
+} from "../components/CreateButton.jsx";
 import { auth, googleProvider, db } from "../config/firebase.js";
 import {
   getDoc,
@@ -167,7 +167,7 @@ export function DeckPage() {
   return (
     <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500 flex flex-col">
       <Navbar></Navbar>
-      <CreateCardButton submitFunction={submitCard}></CreateCardButton>
+      <CreateButton submitFunction={submitCard} />
       <div className="pt-20 w-11/12 flex flex-nowrap mx-auto">
         <h1 className="text-white text-5xl portrait:text-3xl grow">
           {deckValues.currentDeck}

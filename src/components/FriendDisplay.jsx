@@ -33,13 +33,19 @@ export function FriendDisplay() {
   }, []);
 
   return (
-    <div className="w-full h-fit flex flex-col p-7 z-20">
+    <div className="w-11/12 h-fit flex flex-col py-7 z-20 m-auto">
       <h1 className="text-white text-5xl ">Friends</h1>
       {users.length > 0 ? (
-        <div className="w-full h-fit rounded-lg bg-gray-600 text-gray-300  mt-8 text-4xl text-center flex flex-row  overflow-x-hidden">
-          {users.map((user) => {
-            return <UserIcon username={user} key={user} />;
-          })}
+        <div>
+          {/* <input
+            className="w-11/12 mx-auto px-3 py-1 rounded-full text-2xl text-black bg-gray-200 outline outline-1 outlilne-gray-300"
+            placeholder="Search for people"
+          /> */}
+          <div className="w-full h-fit rounded-lg bg-gray-600 text-gray-300  mt-8 text-4xl text-center flex flex-row  overflow-x-hidden">
+            {users.map((user) => {
+              return <UserIcon username={user} key={user} />;
+            })}
+          </div>
         </div>
       ) : (
         <h2 className="h-fit rounded-lg bg-gray-600 text-gray-300  mt-8 text-4xl text-center">

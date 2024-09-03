@@ -35,7 +35,7 @@ export function EditMenu({
   var topic = defaultTopic;
   var content = defaultContent;
   return (
-    <div className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-fit p-3 rounded-lg border-2 border-black relative overflow-hidden">
+    <div className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-fit min-h-96 p-3 rounded-lg border-2 border-black relative overflow-hidden">
       <div className="text-5xl h-7 w-full self-center flex z-30">
         <p className="grow text-2xl">Editing Card</p>
         <button
@@ -47,26 +47,26 @@ export function EditMenu({
           Cancel
         </button>
       </div>
-      {/* TOPIC input ~ ~ ~ ~ */}
+      {/* TOPIC input ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */}
       <div className="mt-8 flex flex-wrap w-full">
         <textarea
           ref={topicRef}
           type="text"
           placeholder="topic"
           defaultValue={topic}
-          className="w-72 h-fit max-h-40 mb-4 p-1 text-4xl text-gray-800 rounded-md text-wrap resize-none bg-slate-100 outline outline-2 outline-slate-400"
+          className="w-72 h-fit max-h-40 mb-4 p-1 text-4xl text-gray-800 rounded-md text-wrap resize-none bg-slate-200 outline outline-1 outline-slate-400"
           onChange={(e) => {
             topic = e.target.value;
             setInputHeights(topic);
           }}
         />
-        {/* CONTENT input ~ ~ ~ ~ */}
+        {/* CONTENT input ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ */}
         <textarea
           ref={contentRef}
           type="text"
           placeholder="content"
           defaultValue={content}
-          className="w-72 h-fit max-h-40 mb-4 p-1 text-3xl text-gray-800 rounded-md text-wrap resize-none bg-slate-100 outline outline-2 outline-slate-400"
+          className="w-72 h-fit max-h-40 mb-4 p-1 text-3xl text-gray-800 rounded-md text-wrap resize-none bg-slate-200 outline outline-1 outline-slate-400"
           onChange={(e) => {
             content = e.target.value;
             setInputHeights();

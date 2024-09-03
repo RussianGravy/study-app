@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { Modal } from "../components/Modal";
-import { CreateCardButton } from "../components/CreateCardButton";
+import { CreateButton } from "../components/CreateButton.jsx";
 import { Deck } from "../components/Deck";
 import { DeckDisplay } from "../components/DeckDisplay.jsx";
 import { FriendDisplay } from "../components/FriendDisplay.jsx";
-import { UserDisplay } from "../components/UserDisplay.jsx";
 import {
   collection,
   doc,
@@ -135,7 +134,7 @@ export function HomePage() {
       </div>
       <Navbar currentPage={"Home"} />
       <Modal toggle={modalToggle}>{CreateDeck}</Modal>
-      <CreateCardButton
+      <CreateButton
         submitFunction={() => {
           setModalToggle(true);
         }}
