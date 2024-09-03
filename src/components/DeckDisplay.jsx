@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { Deck } from "./Deck";
 import { useDeck } from "../contexts/DeckContext";
+import { db } from "../config/firebase";
+import { useAuth } from "../contexts/AuthContext";
 
 export function DeckDisplay({ decks }) {
+  const [username, setUsername] = useState("");
+  const temp = useAuth();
   const deckValues = useDeck();
   const navigate = useNavigate();
+
+  async function getUsername() {
+    try {
+      const ref = doc(db, temp.currentUser.email, "username");
+      setUsername((await getDoc(ref)).data().username);
+    } catch (err) {
+      console.error(err);
+      setUsername("error getting name...");
+    }
+  }
+
+  useEffect(() => {
+    getUsername();
+  }, []); // on first render
 
   function selectDeck(name) {
     deckValues.changeDeck(name);
@@ -14,7 +33,9 @@ export function DeckDisplay({ decks }) {
 
   return (
     <div className="bg-gray-600 h-fit min-h-96 w-7/12 portrait:w-11/12 rounded-lg relative mx-auto">
-      <h1 className="text-white text-5xl mt-5 ml-10">Your Decks</h1>
+      <h1 className="text-white text-5xl mt-5 ml-10">
+        {username + " - Your Decks"}
+      </h1>
       <div className="w-full h-max pl-8 portrait:pl-2 flex flex-row flex-nowrap overflow-x-scroll snap-x snap-mandatory">
         {decks.length > 0 ? (
           decks.split(",").map((name) => {

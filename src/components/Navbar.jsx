@@ -40,7 +40,7 @@ export function Navbar({ currentPage }) {
           >
             Home
           </button>
-          <button
+          {/* <button
             onClick={() => {
               navigate("/profile");
             }}
@@ -50,7 +50,7 @@ export function Navbar({ currentPage }) {
             }
           >
             Profile
-          </button>
+          </button> */}
           <button
             onClick={() => {
               window.open(
