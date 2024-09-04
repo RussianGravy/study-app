@@ -108,7 +108,7 @@ export function HomePage() {
           <input
             type="text"
             placeholder=" topic"
-            className="w-11/12 text-5xl rounded-xl mx-auto mt-10 mb-24"
+            className="w-11/12 mx-auto mt-10 mb-24 text-5xl bg-transparent border-slate-500 border-b-2 rounded-sm "
             onChange={(e) => {
               setNewDeckName(e.target.value);
             }}
