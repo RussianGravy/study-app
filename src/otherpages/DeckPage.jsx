@@ -4,11 +4,7 @@ import ReactDOM from "react-dom";
 import { useState } from "react";
 import { Navbar } from "../components/Navbar.jsx";
 import { Card } from "../components/Card.jsx";
-import {
-  EditMenu,
-  DeleteMenu,
-  NewCardMenu,
-} from "../components/Menus.jsx";
+import { EditMenu, DeleteMenu, NewCardMenu } from "../components/Menus.jsx";
 import {
   CreateButton,
   newContent,
@@ -165,11 +161,11 @@ export function DeckPage() {
   });
 
   return (
-    <div className="w-screen min-h-screen p-0 m-0 relative bg-slate-500 flex flex-col">
+    <div className="w-screen min-h-screen p-0 m-0 relative bg-gray-200 flex flex-col">
       <Navbar></Navbar>
       <CreateButton submitFunction={submitCard} />
       <div className="pt-20 w-11/12 flex flex-nowrap mx-auto">
-        <h1 className="text-white text-5xl portrait:text-3xl grow">
+        <h1 className="text-gray-700 text-5xl portrait:text-3xl grow">
           {deckValues.currentDeck}
         </h1>
         <button className="w-10 aspect-square bg-slate-700 rounded-xl self-center">

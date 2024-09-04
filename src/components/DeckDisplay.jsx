@@ -32,10 +32,10 @@ export function DeckDisplay({ decks }) {
   }
 
   return (
-    <div className="bg-gray-600 h-fit min-h-96 w-11/12 rounded-lg relative mx-auto">
-      <h1 className="text-white text-5xl text-nowrap portrait:text-2xl mt-5 ml-10 portrait:ml-3 flex flex-row">
-        <h2 className=" mr-4">{username}</h2>
-        <h2>- Your Decks</h2>
+    <div className="bg-gray-50 h-fit min-h-96 w-11/12 rounded-lg relative mx-auto">
+      <h1 className=" text-5xl text-nowrap portrait:text-2xl mt-5 ml-10 portrait:ml-3 flex flex-row">
+        <h2 className="text-blue-600 mr-4 portrait:mr-2">{username}</h2>
+        <h2 className="text-black">- Your Decks</h2>
       </h1>
       <div className="w-full h-max pl-8 portrait:pl-2 flex flex-row flex-nowrap overflow-x-scroll snap-x snap-mandatory">
         {decks.length > 0 ? (
@@ -57,13 +57,13 @@ export function DeckDisplay({ decks }) {
             );
           })
         ) : (
-          <h2 className="my-8 ml-8 py-2 text-4xl text-gray-300">
+          <h2 className="my-8 ml-8 py-2 text-4xl text-gray-600">
             No decks to display. Press the 'plus' to begin your first deck.
           </h2>
         )}
       </div>
       {decks.split(",").length > 1 ? (
-        <div className="absolute top-0 right-0 h-full w-10 portrait:w-8 rounded-lg from-transparent to-gray-800 bg-gradient-to-r"></div>
+        <div className="absolute top-0 right-0 h-full w-8 portrait:w-6 rounded-lg from-transparent to-gray-500 bg-gradient-to-r"></div>
       ) : (
         ""
       )}

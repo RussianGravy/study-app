@@ -37,7 +37,7 @@ export function Card({ topic, content, deleteFunction, updateFunction }) {
 function Front({ topic, deleteFunction, updateFunction, toggleFunction }) {
   return (
     <div
-      className="bg-slate-300 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col front"
+      className="bg-blue-300 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col front"
       draggable
     >
       <div className="text-5xl h-7 w-full self-center flex flex-row-reverse z-30 center">
@@ -68,7 +68,7 @@ function Front({ topic, deleteFunction, updateFunction, toggleFunction }) {
 function Back({ content, deleteFunction, updateFunction, toggleFunction }) {
   return (
     <div
-      className="bg-slate-300 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col back"
+      className="bg-blue-300 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col back"
       draggable
     >
       <div className="text-5xl h-7 w-full self-center flex flex-row-reverse z-30 center">
@@ -91,7 +91,7 @@ function Back({ content, deleteFunction, updateFunction, toggleFunction }) {
           <img src={flip_icon} className="w-full" />
         </button>
       </div>
-      <p className=" text-2xl text-gray-700 text-center mx-auto my-14 ">
+      <p className=" text-2xl text-black text-center mx-auto my-14 ">
         {content}
       </p>
     </div>
