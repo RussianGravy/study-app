@@ -32,9 +32,9 @@ export function DeckDisplay({ decks }) {
   }
 
   return (
-    <div className="bg-gray-50 h-fit min-h-96 w-11/12 rounded-lg relative mx-auto">
+    <div className="bg-gray-50 bg-opacity-50 h-fit min-h-96 w-11/12 rounded-lg relative mx-auto">
       <h1 className=" text-5xl text-nowrap portrait:text-2xl mt-5 ml-10 portrait:ml-3 flex flex-row">
-        <h2 className="text-blue-600 mr-4 portrait:mr-2">{username}</h2>
+        <h2 className="text-blue-500 mr-4 portrait:mr-2">{username}</h2>
         <h2 className="text-black">- Your Decks</h2>
       </h1>
       <div className="w-full h-max pl-8 portrait:pl-2 flex flex-row flex-nowrap overflow-x-scroll snap-x snap-mandatory">
