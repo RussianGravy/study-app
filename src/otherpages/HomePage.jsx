@@ -129,7 +129,7 @@ export function HomePage() {
 
   return (
     <div className="w-screen min-h-screen p-0 m-0 relative bg-gray-200 ">
-      <div className="w-screen h-screen overflow-hidden fixed top-0 left-0 z-0 opacity-15">
+      <div className="w-screen h-screen overflow-hidden fixed top-0 left-0 z-0 opacity-20">
         <img className="h-full w-full aspect-auto" src={backgroundImage} />
       </div>
       <Navbar currentPage={"Home"} />
