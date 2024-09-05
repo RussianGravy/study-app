@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../config/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import { doc, getDoc, collection } from "firebase/firestore";
+import user_icon from "../assets/user_icon.png";
 
 export function FriendDisplay() {
   const [users, setUsers] = useState([]);
@@ -14,7 +15,8 @@ export function FriendDisplay() {
       var ref = doc(db, "/global_data", "users");
       var obj = (await getDoc(ref)).data();
       for (const userPair of Object.entries(obj)) {
-        await addToList(userPair, users);
+        if (userPair[1] != temp.currentUser.email)
+          await addToList(userPair, users);
       }
       setUsers(users);
     } catch (err) {
@@ -34,21 +36,17 @@ export function FriendDisplay() {
 
   return (
     <div className="w-11/12 h-fit flex flex-col py-7 z-20 m-auto">
-      <h1 className="text-black text-5xl ">Friends</h1>
+      <h1 className="text-black text-5xl ">Other Users</h1>
       {users.length > 0 ? (
         <div>
-          {/* <input
-            className="w-11/12 mx-auto px-3 py-1 rounded-full text-2xl text-black bg-gray-200 outline outline-1 outlilne-gray-300"
-            placeholder="Search for people"
-          /> */}
-          <div className="w-full h-fit rounded-lg bg-gray-50 text-gray-300  mt-8 text-4xl text-center flex flex-row  overflow-x-hidden">
+          <div className="w-full h-fit rounded-lg bg-gray-50 bg-opacity-50 text-gray-300  mt-8 text-4xl text-center flex flex-row  overflow-x-hidden">
             {users.map((user) => {
               return <UserIcon username={user} key={user} />;
             })}
           </div>
         </div>
       ) : (
-        <h2 className="h-fit rounded-lg bg-gray-50 text-gray-600  mt-8 text-4xl text-center">
+        <h2 className="h-fit rounded-lg bg-gray-50 bg-opacity-50 text-gray-600  mt-8 text-4xl text-center">
           Error getting users to friend...
         </h2>
       )}
@@ -61,12 +59,12 @@ function UserIcon({ username }) {
   return (
     <div className="w-max h-fit py-5 px-3">
       <button
-        className="w-40 h-40 rounded-full outline outline-gray-700 bg-blue-400 mt-4 mx-auto flex"
+        className="w-40 h-40 rounded-full outline outline-gray-700 bg-blue-200 mt-4 mx-auto flex overflow-hidden"
         onClick={() => {
           navigate("/profile");
         }}
       >
-        <h2 className="m-auto text-6xl text-white">{username.slice(0, 1)}</h2>
+        <img src={user_icon} className="w-full aspect-square mt-5" />
       </button>
       <h2 className="text-black mt-3 mx-auto text-xl">{username}</h2>
     </div>

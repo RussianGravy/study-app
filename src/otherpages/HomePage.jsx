@@ -143,7 +143,7 @@ export function HomePage() {
         {/* pb-20 */}
         {/* <UserDisplay /> */}
         <DeckDisplay decks={decks} />
-        {/* <FriendDisplay /> */}
+        <FriendDisplay />
       </div>
     </div>
   );
