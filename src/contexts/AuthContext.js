@@ -8,7 +8,7 @@ import {
   updatePassword,
   updateEmail,
 } from "firebase/auth";
-import { setDoc, getDoc, doc, collection } from "firebase/firestore";
+import { setDoc, getDoc, doc, collection, updateDoc } from "firebase/firestore";
 
 const AuthContext = createContext();
 
@@ -32,7 +32,7 @@ export function AuthProvider({ children }) {
       setDoc(ref, { username: user_name });
       //store user globally
       var docRef = await doc(db, "global_data", "users");
-      var oldData = (await getDoc(docRef)).data().users;
+      updateDoc(docRef, { [user_name]: email });
     } catch (err) {
       console.error(err);
     }

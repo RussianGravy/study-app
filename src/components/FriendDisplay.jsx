@@ -39,7 +39,7 @@ export function FriendDisplay() {
       <h1 className="text-black text-5xl ">Other Users</h1>
       {users.length > 0 ? (
         <div>
-          <div className="w-full h-fit rounded-lg bg-gray-50 bg-opacity-50 text-gray-300  mt-8 text-4xl text-center flex flex-row  overflow-x-hidden">
+          <div className="w-full h-fit rounded-lg bg-gray-50 bg-opacity-50 text-gray-300  mt-8 text-4xl text-center flex flex-row  overflow-x-scroll">
             {users.map((user) => {
               return <UserIcon username={user} key={user} />;
             })}
@@ -57,7 +57,7 @@ export function FriendDisplay() {
 function UserIcon({ username }) {
   const navigate = useNavigate();
   return (
-    <div className="w-max h-fit py-5 px-3">
+    <div className="w-max h-fit py-5 px-4">
       <button
         className="w-40 h-40 rounded-full outline outline-gray-700 bg-blue-200 mt-4 mx-auto flex overflow-hidden"
         onClick={() => {
