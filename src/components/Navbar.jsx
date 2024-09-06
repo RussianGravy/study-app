@@ -20,56 +20,67 @@ export function Navbar({ currentPage }) {
           Social Studies
         </h1>
       </div>
-      <div
-        id="dropdown"
-        className="flex flex-col items-end w-32 h-14 overflow-hidden hover:bg-white hover:border hover:border-b-neutral-700"
-      >
-        <img
-          src={menu_icon}
-          className="w-10 aspect-square mx-auto my-2 rotate-180"
-        />
-        <div className="w-max right flex flex-col">
-          <button
-            onClick={() => {
-              navigate("/");
-            }}
-            className={
-              "hover:bg-blue-500 text-lg portrait:text-lg py-3 mt-1 w-32 " +
-              (page === "Home" ? "text-gray-400" : "text-black")
-            }
-          >
-            Home
-          </button>
-          <button
-            onClick={() => {
-              navigate("/profile");
-            }}
-            className={
-              "hover:bg-blue-500 text-lg portrait:text-lg py-3 mt-1 w-32 " +
-              (page === "Profile" ? "text-gray-400" : "text-black")
-            }
-          >
-            Profile
-          </button>
-          <button
-            onClick={() => {
-              window.open(
-                "https://github.com/RussianGravy/study-app",
-                "_blank"
-              );
-            }}
-            className="hover:bg-blue-500 text-black text-lg portrait:text-lg py-3 mt-1 w-32"
-          >
-            GitHub
-          </button>
-          <button
-            onClick={temp.logOut}
-            className="hover:bg-blue-500 text-black text-lg portrait:text-lg py-3 mt-1 w-32"
-          >
-            Log Out
-          </button>
+      {temp.currentUser != null ? (
+        <div
+          id="dropdown"
+          className="flex flex-col items-end w-32 h-14 overflow-hidden hover:bg-white hover:border hover:border-b-neutral-700"
+        >
+          <img
+            src={menu_icon}
+            className="w-10 aspect-square mx-auto my-2 rotate-180"
+          />
+          <div className="w-max right flex flex-col">
+            <button
+              onClick={() => {
+                navigate("/");
+              }}
+              className={
+                "hover:bg-blue-500 text-lg portrait:text-lg py-3 mt-1 w-32 " +
+                (page === "Home" ? "text-gray-400" : "text-black")
+              }
+            >
+              Home
+            </button>
+            <button
+              onClick={() => {
+                navigate("/profile");
+              }}
+              className={
+                "hover:bg-blue-500 text-lg portrait:text-lg py-3 mt-1 w-32 " +
+                (page === "Profile" ? "text-gray-400" : "text-black")
+              }
+            >
+              Profile
+            </button>
+            <button
+              onClick={() => {
+                window.open(
+                  "https://github.com/RussianGravy/study-app",
+                  "_blank"
+                );
+              }}
+              className="hover:bg-blue-500 text-black text-lg portrait:text-lg py-3 mt-1 w-32"
+            >
+              GitHub
+            </button>
+            <button
+              onClick={temp.logOut}
+              className="hover:bg-blue-500 text-black text-lg portrait:text-lg py-3 mt-1 w-32"
+            >
+              Log Out
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <button
+          onClick={() => {
+            navigate("/login");
+          }}
+          className="w-32 portrait:w-24 mr-5 py-1 text-blue-600 text-lg portrait:text-sm self-center rounded-2xl outline outline-blue-600 hover:bg-blue-200"
+        >
+          Sign In
+        </button>
+      )}
     </div>
   );
 }
