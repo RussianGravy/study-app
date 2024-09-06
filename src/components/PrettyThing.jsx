@@ -6,7 +6,7 @@ export function PrettyThing() {
       <div className="mt-20 mx-auto relative">
         <div
           className={
-            "absolute -rotate-12 bg-blue-300 rounded-lg border-2 border-black overflow-hidden flex -z-10"
+            "absolute -rotate-12 bg-blue-300 rounded-lg border-2 border-black overflow-hidden flex -z-10 shadow-sm shadow-gray-600"
           }
           style={{
             width: "24vw",
@@ -26,7 +26,7 @@ export function PrettyThing() {
         </div>
         <div
           className={
-            "bg-blue-300 rounded-lg border-2 border-black overflow-hidden flex"
+            "bg-blue-300 rounded-lg border-2 border-black overflow-hidden flex shadow-sm shadow-gray-600"
           }
           style={{ width: "24vw", aspectRatio: "80/96" }}
         >
@@ -41,7 +41,7 @@ export function PrettyThing() {
         </div>
         <div
           className={
-            "absolute rotate-12 bg-blue-300 rounded-lg border-2 border-black overflow-hidden flex -z-10"
+            "absolute rotate-12 bg-blue-300 rounded-lg border-2 border-black overflow-hidden flex -z-10 shadow-sm shadow-gray-600"
           }
           style={{
             width: "24vw",
