@@ -39,7 +39,7 @@ export function Navbar({ currentPage }) {
                 (page === "Home" ? "text-gray-400" : "text-black")
               }
             >
-              Home
+              Dashboard
             </button>
             <button
               onClick={() => {
