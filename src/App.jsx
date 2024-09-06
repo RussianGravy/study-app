@@ -6,7 +6,7 @@ import { HomePage } from "./otherpages/HomePage.jsx";
 import { DeckPage } from "./otherpages/DeckPage.jsx";
 import { SignUpPage } from "./otherpages/SignUpPage.jsx";
 import { ProfilePage } from "./otherpages/ProfilePage.jsx";
-import TestPage from "./otherpages/TestPage.jsx";
+import { LandingPage } from "./otherpages/LandingPage.jsx";
 import { auth, googleProvider, db } from "./config/firebase.js";
 //temp
 import { Container } from "react-bootstrap";
@@ -39,10 +39,9 @@ function App() {
                   path="/profile"
                   element={<PrivateRoute Component={ProfilePage} />}
                 />
-
+                <Route path="/landing" Component={LandingPage} />
                 <Route path="/signup" Component={SignUpPage} />
                 <Route path="/login" Component={LoginPage} />
-                <Route path="/test" Component={TestPage} />
               </Routes>
             </AuthProvider>
           </BrowserRouter>
