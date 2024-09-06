@@ -142,7 +142,7 @@ export function HomePage() {
       <div className="pt-20 pb-20 w-screen h-fit flex flex-row flex-wrap">
         {/* pb-20 */}
         {/* <UserDisplay /> */}
-        <DeckDisplay decks={decks} />
+        <DeckDisplay decks={decks} show_name={true} />
         <FriendDisplay />
       </div>
     </div>

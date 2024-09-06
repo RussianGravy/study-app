@@ -6,7 +6,7 @@ import { useDeck } from "../contexts/DeckContext";
 import { db } from "../config/firebase";
 import { useAuth } from "../contexts/AuthContext";
 
-export function DeckDisplay({ decks }) {
+export function DeckDisplay({ decks, show_name }) {
   const [username, setUsername] = useState("");
   const temp = useAuth();
   const deckValues = useDeck();
@@ -33,10 +33,14 @@ export function DeckDisplay({ decks }) {
 
   return (
     <div className="bg-gray-50 bg-opacity-50 h-fit min-h-96 w-11/12 rounded-lg relative mx-auto">
-      <h1 className=" text-5xl text-nowrap portrait:text-2xl mt-5 ml-10 portrait:ml-3 flex flex-row">
-        <h2 className="text-blue-500 mr-4 portrait:mr-2">{username}</h2>
-        <h2 className="text-black">- Your Decks</h2>
-      </h1>
+      {show_name == true ? (
+        <h1 className=" text-5xl text-nowrap portrait:text-2xl mt-5 ml-10 portrait:ml-3 flex flex-row">
+          <h2 className="text-blue-600 mr-4 portrait:mr-2">{username}</h2>
+          <h2 className="text-black">- Your Decks</h2>
+        </h1>
+      ) : (
+        ""
+      )}
       <div className="w-full h-max pl-8 portrait:pl-2 flex flex-row flex-nowrap overflow-x-scroll snap-x snap-mandatory">
         {decks.length > 0 ? (
           decks.split(",").map((name) => {
@@ -57,7 +61,7 @@ export function DeckDisplay({ decks }) {
             );
           })
         ) : (
-          <h2 className="my-8 ml-8 py-2 text-4xl text-gray-600">
+          <h2 className="my-8 ml-8 portrait:ml-0 py-2 portrait:pr-2 text-4xl portrait:text-xl text-gray-600">
             No decks to display. Press the 'plus' to begin your first deck.
           </h2>
         )}
