@@ -117,7 +117,7 @@ export function SignUpPage() {
     <div className="w-screen h-screen flex">
       <img
         src={background}
-        className="w-full h-full absolute top-0 left-0 -z-10 opacity-20"
+        className="w-full h-full fixed top-0 left-0 -z-10 opacity-20"
       />
       <div className="w-full portrait:w-max  h-max self-center mx-auto flex flex-row portrait:flex-col">
         <div className="mx-auto flex flex-col">
