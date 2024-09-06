@@ -12,7 +12,7 @@ export function LandingPage() {
         src={background}
         className="w-screen h-screen fixed top-0 left-0 opacity-15 -z-10"
       />
-      <h1 className="w-fit mt-28 mx-auto text-black text-6xl portrait:text-4xl text-center font-bold">
+      <h1 className="w-fit mt-20 mx-auto text-black text-6xl portrait:text-4xl text-center font-bold">
         Welcome to my social study app!
       </h1>
       <PrettyThing />
