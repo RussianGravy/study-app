@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { auth, googleProvider } from "../config/firebase.js";
 import { useAuth } from "../contexts/AuthContext.js";
+import background from "../assets/background.png";
 
 export function SignUpPage() {
   //states and variables
@@ -18,27 +19,34 @@ export function SignUpPage() {
 
   // input chain and supporting functions
   const inputChain = [
-    <input
-      className="my-3 px-1 outline rounded-sm"
-      type="username"
-      value={username}
-      placeholder="Username..."
-      required
-      onChange={(e) => {
-        setUsername(e.target.value);
-      }}
-    />,
-    <input
-      className="my-3 px-1 outline rounded-sm"
-      type="email"
-      value={email}
-      placeholder={"Email..."}
-      required
-      onChange={(e) => {
-        setEmail(e.target.value);
-      }}
-    />,
     <div className="flex flex-col">
+      <h2 className="text-gray-600">Username:</h2>
+      <input
+        className="my-3 px-1 outline rounded-sm"
+        type="username"
+        value={username}
+        placeholder="Username..."
+        required
+        onChange={(e) => {
+          setUsername(e.target.value);
+        }}
+      />
+    </div>,
+    <div className="flex flex-col">
+      <h2 className="text-gray-600">Email:</h2>
+      <input
+        className="my-3 px-1 outline rounded-sm"
+        type="email"
+        value={email}
+        placeholder={"Email..."}
+        required
+        onChange={(e) => {
+          setEmail(e.target.value);
+        }}
+      />
+    </div>,
+    <div className="flex flex-col">
+      <h2 className="text-gray-600">Password:</h2>
       <input
         className="my-3 px-1 outline rounded-sm"
         type="password"
@@ -46,9 +54,11 @@ export function SignUpPage() {
         placeholder="Password..."
         required
         onChange={(e) => {
+          setError("");
           setPassword(e.target.value);
         }}
       />
+      <h2 className="text-gray-600">Confirm Password:</h2>
       <input
         className="my-3 px-1 outline rounded-sm"
         type="password"
@@ -56,6 +66,7 @@ export function SignUpPage() {
         placeholder="Confirm Password..."
         required
         onChange={(e) => {
+          setError("");
           setPasswordConfirm(e.target.value);
         }}
       />
@@ -66,13 +77,34 @@ export function SignUpPage() {
       <h1 className="my-3 text-gray-600 text-2xl">Email: {email}</h1>
       <h1 className="my-3 text-gray-600 text-2xl">Password: {password}</h1>
     </div>,
-  ];
+  ]; //end of input chain
+
+  function checkForErrors() {
+    if (username.length == 0) {
+      setError("Username is blank.");
+      return false;
+    }
+    if (email.length == 0 && chainIndex == 1) {
+      setError("Email is blank.");
+      return false;
+    }
+    if (!email.includes("@") && chainIndex == 1) {
+      setError("Not a valid email.");
+      return false;
+    }
+    if (password.length == 0 && chainIndex == 2) {
+      setError("Empty password.");
+      return false;
+    }
+    if (password != passwordConfirm) {
+      setError("Match passwords.");
+      return false;
+    }
+    setError("");
+    return true;
+  }
 
   async function handleSubmit() {
-    if (password !== passwordConfirm) {
-      console.log("passwords do not match");
-      return;
-    }
     try {
       await temp.signUp(username, email, password);
       navigate("/");
@@ -83,59 +115,76 @@ export function SignUpPage() {
 
   return (
     <div className="w-screen h-screen flex">
-      <div className="w-max h-max self-center mx-auto flex flex-col">
-        {error}
-        <h1 className=" text-5xl self-center">Sign Up</h1>
-        <div className="h-max w-max flex flex-col bg-slate-200 mt-10 mb-5 mx-auto px-8 py-3 rounded-lg">
-          {inputChain[chainIndex]}
-          {chainIndex < inputChain.length - 1 ? (
-            <button
-              className="py-1 px-4 bg-blue-400 text-white h-full rounded-sm"
-              onClick={() => {
-                setChainIndex(chainIndex + 1);
-              }}
-            >
-              Next
-            </button>
-          ) : (
-            <button
-              className="my-3 py-1 px-4 bg-blue-400 text-white h-full rounded-sm"
-              onClick={handleSubmit}
-              type="submit"
-            >
-              Sign Up
-            </button>
-          )}
-          {chainIndex >= 1 ? (
-            <button
-              className="my-1 text-sm text-gray-600"
-              onClick={() => {
-                setChainIndex(chainIndex - 1);
-              }}
-            >
-              Back
-            </button>
-          ) : (
-            ""
-          )}
-        </div>
-        <div className="flex flex-row self-center">
-          <p>Have an account?</p>
-          <a className="ml-1  text-blue-600" href="/login">
-            Log In
-          </a>
+      <img
+        src={background}
+        className="w-full h-full absolute top-0 left-0 -z-10 opacity-20"
+      />
+      <div className="w-full portrait:w-max  h-max self-center mx-auto flex flex-row portrait:flex-col">
+        <div className="mx-auto flex flex-col">
+          <div className="w-72 h-max flex flex-col bg-slate-200 mb-5 mx-auto px-8 py-3 rounded-lg">
+            <h1 className="mx-auto mb-4 text-5xl self-center">Sign Up</h1>
+            {/* Error Message  */}
+            {error.length > 0 ? (
+              <div className="w-fit h-max mx-auto mb-3 px-4 py-2 rounded-md bg-red-500 outline outline-red-300 flex flex-row flex-nowrap">
+                <h1 className=" text-white text-sm text-nowrap">
+                  {"Error: " + error}
+                </h1>
+                <button
+                  className="ml-3 text-white text-sm font-bold"
+                  onClick={() => {
+                    setError("");
+                  }}
+                >
+                  X
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
+            {/* Main Content */}
+            {inputChain[chainIndex]}
+            {chainIndex < inputChain.length - 1 ? (
+              <button
+                className="mt-4 py-1 px-4 bg-blue-400 text-white h-full rounded-sm"
+                onClick={() => {
+                  if (checkForErrors()) setChainIndex(chainIndex + 1);
+                }}
+              >
+                Next
+              </button>
+            ) : (
+              <button
+                className="my-3 py-1 px-4 bg-blue-400 text-white h-full rounded-sm"
+                onClick={handleSubmit}
+                type="submit"
+              >
+                Sign Up
+              </button>
+            )}
+            {chainIndex >= 1 ? (
+              <button
+                className="my-1 text-sm text-gray-600"
+                onClick={() => {
+                  setError("");
+                  setPassword("");
+                  setPasswordConfirm("");
+                  setChainIndex(chainIndex - 1);
+                }}
+              >
+                Back
+              </button>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="flex flex-row self-center">
+            <p>Have an account?</p>
+            <a className="ml-1  text-blue-600" href="/login">
+              Log In
+            </a>
+          </div>
         </div>
       </div>
     </div>
   );
-}
-{
-  /* <button
-className="my-1 text-sm text-gray-600"
-onClick={() => {
-  setChainIndex(chainIndex - 1);
-}}
->
-Back
-</button> */
 }

@@ -5,6 +5,7 @@ import { auth } from "../config/firebase.js";
 import { useState } from "react";
 import Auth from "../components/Auth.jsx";
 import styles from "../components/custom_css/global.module.css";
+import background from "../assets/background.png";
 
 export function LoginPage() {
   useEffect(() => {
@@ -15,10 +16,16 @@ export function LoginPage() {
   }, []);
   return (
     <div className="relative flex flex-row w-screen h-screen p-0 m-0 overflow-hidden">
+      <img
+        src={background}
+        className="w-full h-full absolute top-0 left-0 -z-10 opacity-20"
+      />
       <div className="h-fit w-fit flex flex-row portrait:flex-col portrait:w-min self-center mx-auto">
-        <h1 className="text-5xl w-fit landscape:mr-72 portrait:mb-6 portrait:text-center font-serif">
-          The Social Study-App
-        </h1>
+        <div className="w-fit landscape:mr-72 portrait:mb-6 flex flex-row">
+          <h1 className="text-5xl text-center font-serif">
+            The Social Study-App
+          </h1>
+        </div>
         <div className="m-auto p-0">
           <Auth></Auth>
         </div>
