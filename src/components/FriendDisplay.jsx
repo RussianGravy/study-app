@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../config/firebase";
 import { useAuth } from "../contexts/AuthContext";
+import { useDeck } from "../contexts/DeckContext";
 import { doc, getDoc, collection } from "firebase/firestore";
 import user_icon from "../assets/user_icon.png";
 
 export function FriendDisplay() {
   const [users, setUsers] = useState([]);
   const temp = useAuth();
-
+  const navigate = useNavigate();
+  const deckValues = useDeck();
   async function getUsers() {
     var users = [];
     try {
@@ -16,7 +18,8 @@ export function FriendDisplay() {
       var obj = (await getDoc(ref)).data();
       for (const userPair of Object.entries(obj)) {
         if (userPair[1] != temp.currentUser.email)
-          await addToList(userPair, users);
+          // await addToList(userPair, users);
+          users.push(userPair);
       }
       setUsers(users);
     } catch (err) {
@@ -40,8 +43,17 @@ export function FriendDisplay() {
       {users.length > 0 ? (
         <div>
           <div className="w-full h-fit rounded-lg bg-gray-50 bg-opacity-50 text-gray-300  mt-8 text-4xl text-center flex flex-row  overflow-x-scroll">
-            {users.map((user) => {
-              return <UserIcon username={user} key={user} />;
+            {users.map((userInfo) => {
+              return (
+                <UserIcon
+                  username={userInfo[0]}
+                  key={userInfo[1]}
+                  clickEvent={() => {
+                    deckValues.changeView(userInfo[1]);
+                    navigate("/profile");
+                  }}
+                />
+              );
             })}
           </div>
         </div>
@@ -54,15 +66,12 @@ export function FriendDisplay() {
   );
 }
 
-function UserIcon({ username }) {
-  const navigate = useNavigate();
+function UserIcon({ username, clickEvent }) {
   return (
     <div className="w-max h-fit py-5 px-4">
       <button
         className="w-40 h-40 rounded-full outline outline-gray-700 bg-blue-200 mt-4 mx-auto flex overflow-hidden"
-        onClick={() => {
-          navigate("/profile");
-        }}
+        onClick={clickEvent}
       >
         <img src={user_icon} className="w-full aspect-square mt-5" />
       </button>
