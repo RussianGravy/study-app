@@ -15,24 +15,33 @@ export function LandingPage() {
       <h1 className="w-fit mt-28 mx-auto text-black text-6xl portrait:text-4xl text-center font-bold">
         Welcome to my social study app!
       </h1>
-      {/* <img
-        className="aspect-auto w-96 portrait:w-72 mt-20 portrait:mt-14 mx-auto"
-        src={landing_icon}
-      />
-      <h1 className="mt-8 mx-auto text-gray-600 text-4xl portrait:text-2xl text-center">
-        Make, Share, Study
-      </h1> */}
       <PrettyThing />
       <img className="w-10/12 portrait:11/12 mx-auto" src={mustache} />
       <h1 className="mx-auto text-black text-4xl portrait:text-2xl underline">
         About
       </h1>
-      <p className="w-8/12 portrait:w-11/12 pb-10 mt-7 portrait:mt-4 mx-auto text-black text-3xl portrait:text-xl text-center">
+      <p className="w-8/12 portrait:w-11/12 pb-10 portrait:pb-8 mt-7 portrait:mt-4 mx-auto text-black text-3xl portrait:text-xl text-center">
         This web app allows you to create <b> flashcards</b> individually and
         <b> collaboratively</b>! You can <b> friend</b> other users and add
         their <b> Decks</b> to your Dashboard, or you can create your own and
         <b> share </b> them.
       </p>
+      <h1 className="mx-auto text-black text-4xl portrait:text-2xl underline">
+        Technologies Used
+      </h1>
+      <p className="w-8/12 portrait:w-11/12 pb-20 portrait:pb-16 mt-7 portrait:mt-4 mx-auto text-black text-3xl portrait:text-xl text-center">
+        This web app was produced using <b> React</b> and<b> Firebase</b>.
+      </p>
+      {/* <div className="mt-7 mx-auto portrait:mt-4 pb-10 portrait:pb-8 text-black text-4xl portrait:text-2xl text-center flex flex-row">
+        <h1>Check out the</h1>
+        <a
+          className="ml-2 text-blue-500 underline"
+          href="https://github.com/RussianGravy/study-app"
+          target="_blank"
+        >
+          The Repo
+        </a>
+      </div> */}
     </div>
   );
 }
