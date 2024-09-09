@@ -77,10 +77,12 @@ export function HomePage() {
         });
       deleteDoc(docRef);
       var newString;
-      if (decks.length > 0) newString = decks + ", " + name;
-      else newString = name;
+      if (decks.length > 0) {
+        newString = decks + ", " + name;
+      } else {
+        newString = name;
+      }
       setDoc(decksDocRef, { all_names: newString });
-      getDeckList();
     }
     setModalToggle(false);
   }
