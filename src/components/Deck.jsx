@@ -24,8 +24,8 @@ export function Deck({ title, subject, selectFunction }) {
       <div className="bg-blue-300 flex flex-col w-80 h-96 rounded-lg border-2 border-black relative overflow-hidden">
         <div className="w-full h-full bg-blue-300 flex flex-col z-0">
           <div className="w-fit h-fit mx-auto mt-20 text-center text-black">
-            <h1 className="text-5xl">{title}</h1>
-            <h2 className="text-3xl">{subject}</h2>
+            <h1 className="text-4xl">{title}</h1>
+            <h2 className="text-2xl">{subject}</h2>
           </div>
         </div>
       </div>
