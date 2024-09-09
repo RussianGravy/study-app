@@ -1,57 +1,35 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { Navbar } from "../components/Navbar";
 import { Deck } from "../components/Deck";
 import { DeckDisplay } from "../components/DeckDisplay";
 import { useDeck } from "../contexts/DeckContext";
+import backgroundImage from "../assets/background.png";
 import styles from "../components/custom_css/global.module.css";
 
 export function ProfilePage() {
   const [username, setUsername] = useState("");
   const [decks, setDecks] = useState("");
-  const deckValues = useDeck();
-  const userEmail = deckValues.view;
-
-  useEffect(() => {
-    getUsername();
-    getDecks();
-  }, []); // getting initial values
+  const { id } = useParams();
 
   useEffect(() => {
     document.body.className = styles.homeBody;
     return () => {
       document.body.className = "";
     };
-  }, []); // body styling for this page
-
-  async function getUsername() {
-    try {
-      const ref = doc(db, userEmail, "username");
-      setUsername((await getDoc(ref)).data().username);
-    } catch (err) {
-      console.error(err);
-      setUsername("error getting name...");
-    }
-  }
-
-  async function getDecks() {
-    try {
-      const ref = doc(db, userEmail, "decks");
-      const names = (await getDoc(ref)).data().all_names;
-      setDecks(names);
-    } catch (err) {
-      console.error(err);
-      setDecks("");
-    }
-  }
+  }, []);
 
   return (
     <div className="w-screen h-screen flex flex-col">
-      <Navbar currentPage={"Profile"} />{" "}
+      <div className="w-screen h-screen overflow-hidden fixed top-0 left-0 z-0 opacity-20">
+        <img className="h-full w-full aspect-auto" src={backgroundImage} />
+      </div>
+      <Navbar currentPage={"profile/" + id} />
       <div className="mt-28 ml-20 portrait:ml-5 flex flex-row flex-wrap">
         <h1 className="text-blue-600 text-5xl portrait:text-3xl text-nowrap">
-          {username}
+          {id}
         </h1>
         <h1 className="text-5xl portrait:text-3xl ml-3 text-nowrap">
           - Profile

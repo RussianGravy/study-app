@@ -1,19 +1,35 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import { useNavigate } from "react-router-dom";
-import { Auth } from "../components/Auth.jsx";
-import { auth, googleProvider } from "../config/firebase.js";
+import React, { useState, useEffect } from "react";
+import { db } from "../config/firebase.js";
+import { doc, getDoc } from "firebase/firestore";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext.js";
-import { useDeck } from "../contexts/DeckContext.js";
 import main_logo_icon from "../assets/main_logo_icon.png";
 import menu_icon from "../assets/menu_icon.png";
 import "./custom_css/navbar.css";
 
 export function Navbar({ currentPage }) {
   const [page, setPage] = useState(currentPage);
+  const [username, setUsername] = useState("");
+  const { id } = useParams();
   const navigate = useNavigate();
   const temp = useAuth();
-  const deckValues = useDeck();
+
+  useEffect(() => {
+    if (temp.currentUser?.email != null) getUsername();
+  }, [id]);
+
+  async function getUsername() {
+    try {
+      const ref = doc(db, temp.currentUser.email, "username");
+      const data = (await getDoc(ref)).data().username;
+      setUsername(data);
+      console.log(username);
+    } catch (err) {
+      console.error(err);
+      setUsername("error getting name...");
+    }
+  }
+
   return (
     <div className="w-screen h-14 flex flex-row bg-white fixed z-40 border-b-2 border-gray-400">
       <div className="flex grow items-center p-0">
@@ -45,12 +61,13 @@ export function Navbar({ currentPage }) {
             </button>
             <button
               onClick={() => {
-                deckValues.changeView(temp.currentUser.email);
-                navigate("/profile");
+                navigate("/profile/" + username);
               }}
               className={
                 "hover:bg-blue-500 text-lg portrait:text-lg py-3 mt-1 w-32 " +
-                (page === "Profile" ? "text-gray-400" : "text-black")
+                (page === "profile/" + username
+                  ? "text-gray-400"
+                  : "text-black")
               }
             >
               Profile

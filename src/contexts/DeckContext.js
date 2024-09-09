@@ -16,13 +16,7 @@ export function useDeck() {
 }
 
 export function DeckProvider({ children }) {
-  // states
-  const [view, setView] = useState("");
   const [currentDeck, setCurrentDeck] = useState("");
-  //supporting functions
-  const changeView = (view) => {
-    setView(view);
-  };
   const changeDeck = (deck) => {
     setCurrentDeck(deck);
   };
@@ -31,8 +25,6 @@ export function DeckProvider({ children }) {
   const value = {
     currentDeck,
     changeDeck,
-    view,
-    changeView,
   };
   return <DeckContext.Provider value={value}>{children}</DeckContext.Provider>;
 }

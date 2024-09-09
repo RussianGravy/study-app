@@ -36,7 +36,7 @@ function App() {
                 />
                 <Route
                   exact
-                  path="/profile"
+                  path="/profile/:id"
                   element={<PrivateRoute Component={ProfilePage} />}
                 />
                 <Route path="/landing" Component={LandingPage} />

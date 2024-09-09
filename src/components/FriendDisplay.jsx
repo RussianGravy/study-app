@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../config/firebase";
 import { useAuth } from "../contexts/AuthContext";
-import { useDeck } from "../contexts/DeckContext";
 import { doc, getDoc, collection } from "firebase/firestore";
 import user_icon from "../assets/user_icon.png";
 
@@ -10,7 +9,7 @@ export function FriendDisplay() {
   const [users, setUsers] = useState([]);
   const temp = useAuth();
   const navigate = useNavigate();
-  const deckValues = useDeck();
+
   async function getUsers() {
     var users = [];
     try {
@@ -49,8 +48,7 @@ export function FriendDisplay() {
                   username={userInfo[0]}
                   key={userInfo[1]}
                   clickEvent={() => {
-                    deckValues.changeView(userInfo[1]);
-                    navigate("/profile");
+                    navigate("/profile/" + userInfo[0]);
                   }}
                 />
               );
