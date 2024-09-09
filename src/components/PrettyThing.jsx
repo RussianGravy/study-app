@@ -35,7 +35,7 @@ export function PrettyThing() {
               className="mx-auto text-black text-7xl text-center font-serif "
               style={{ fontSize: "5.5vw", marginTop: "7vw" }}
             >
-              Share
+              Study
             </h1>
           </div>
         </div>
@@ -55,7 +55,7 @@ export function PrettyThing() {
               className="mx-auto text-black text-7xl text-center font-serif"
               style={{ fontSize: "5.5vw", marginTop: "7vw" }}
             >
-              Study
+              Share
             </h1>
           </div>
         </div>
