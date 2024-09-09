@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Auth } from "../components/Auth.jsx";
 import { auth, googleProvider } from "../config/firebase.js";
 import { useAuth } from "../contexts/AuthContext.js";
+import { useDeck } from "../contexts/DeckContext.js";
 import main_logo_icon from "../assets/main_logo_icon.png";
 import menu_icon from "../assets/menu_icon.png";
 import "./custom_css/navbar.css";
@@ -12,6 +13,7 @@ export function Navbar({ currentPage }) {
   const [page, setPage] = useState(currentPage);
   const navigate = useNavigate();
   const temp = useAuth();
+  const deckValues = useDeck();
   return (
     <div className="w-screen h-14 flex flex-row bg-white fixed z-40 border-b-2 border-gray-400">
       <div className="flex grow items-center p-0">
@@ -43,6 +45,7 @@ export function Navbar({ currentPage }) {
             </button>
             <button
               onClick={() => {
+                deckValues.changeView(temp.currentUser.email);
                 navigate("/profile");
               }}
               className={

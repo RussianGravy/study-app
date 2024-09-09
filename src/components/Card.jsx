@@ -31,10 +31,16 @@ export function Card({ topic, content, deleteFunction, updateFunction }) {
       </div>
     </div>
   );
-}
+} //end of main component
 
 // supplemental functions below
-function Front({ topic, deleteFunction, updateFunction, toggleFunction }) {
+function Front({
+  topic,
+  deleteFunction,
+  updateFunction,
+  toggleFunction,
+  showControls,
+}) {
   return (
     <div
       className="bg-blue-300 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col front"
@@ -65,7 +71,13 @@ function Front({ topic, deleteFunction, updateFunction, toggleFunction }) {
   );
 }
 
-function Back({ content, deleteFunction, updateFunction, toggleFunction }) {
+function Back({
+  content,
+  deleteFunction,
+  updateFunction,
+  toggleFunction,
+  showControls,
+}) {
   return (
     <div
       className="bg-blue-300 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col back"
