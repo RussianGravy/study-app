@@ -9,6 +9,7 @@ import styles from "../components/custom_css/global.module.css";
 import background from "../assets/background.png";
 
 export function LoginPage() {
+  const [error, setError] = useState("");
   useEffect(() => {
     document.body.className = styles.loginBody;
     return () => {
@@ -29,6 +30,24 @@ export function LoginPage() {
           </h1>
         </div>
         <div className="m-auto p-0">
+          {/* Error Message  */}
+          {error.length > 0 ? (
+            <div className="w-fit h-max mx-auto mb-3 px-4 py-2 rounded-md bg-red-500 outline outline-red-300 flex flex-row flex-nowrap">
+              <h1 className=" text-white text-sm text-nowrap">
+                {"Error: " + error}
+              </h1>
+              <button
+                className="ml-3 text-white text-sm font-bold"
+                onClick={() => {
+                  setError("");
+                }}
+              >
+                X
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
           <Auth></Auth>
         </div>
       </div>
