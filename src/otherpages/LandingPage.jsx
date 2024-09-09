@@ -17,7 +17,19 @@ export function LandingPage() {
       </h1>
       <PrettyThing />
       <img className="w-10/12 portrait:11/12 mx-auto" src={mustache} />
-      <h1 className="mx-auto text-black text-4xl portrait:text-2xl underline">
+      <a
+        className="w-fit m-auto p-6 portrait:p-3 rounded-xl bg-blue-600 text-6xl portrait:text-3xl text-white"
+        href="/signup"
+      >
+        Sign Up
+      </a>
+      <div className="mt-1 m-auto flex flex-row">
+        <p>Already have an account?</p>
+        <a className="ml-1 text-blue-500" href="login">
+          Sign In
+        </a>
+      </div>
+      <h1 className="mt-16 portrait:mt-4 mx-auto text-black text-4xl portrait:text-2xl underline">
         About
       </h1>
       <p className="w-8/12 portrait:w-11/12 pb-10 portrait:pb-8 mt-7 portrait:mt-4 mx-auto text-black text-3xl portrait:text-xl text-center">
