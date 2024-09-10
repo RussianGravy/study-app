@@ -168,8 +168,16 @@ export function DeckPage() {
         <h1 className="text-gray-700 text-5xl portrait:text-3xl grow">
           {deckValues.currentDeck}
         </h1>
-        <button className="w-10 aspect-square bg-slate-700 rounded-xl self-center">
+        <button className="w-10 h-10 bg-slate-700 rounded-xl self-center">
           <img src={settings_icon} className="w-8 p-1 m-auto" />
+        </button>
+        <button
+          className="w-fit h-10 m-2 px-2 bg-slate-700 text-white font-bold rounded-xl self-center"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Exit
         </button>
       </div>
       <div
@@ -177,7 +185,7 @@ export function DeckPage() {
         style={{ width: containerWidth }}
       >
         {cardList.length == 0 ? (
-          <h1 className="text-gray-200 text-3xl text-center m-auto mt-20 leading-relaxed">
+          <h1 className="text-gray-500 text-3xl text-center m-auto mt-20 leading-relaxed">
             No cards to display! Press the 'plus' in the bottom right to add
             your first card.
           </h1>
