@@ -121,8 +121,8 @@ export function SignUpPage() {
       />
       <div className="w-full portrait:w-max  h-max self-center mx-auto flex flex-row portrait:flex-col">
         <div className="mx-auto flex flex-col">
-          <div className="w-72 h-max flex flex-col bg-slate-200 mb-5 mx-auto px-8 py-3 rounded-lg">
-            <h1 className="mx-auto mb-4 text-5xl self-center">Sign Up</h1>
+          <h1 className="mx-auto mb-4 text-5xl self-center">Sign Up</h1>
+          <div className="w-72 h-max min-h-52 flex flex-col bg-slate-200 mb-5 mx-auto px-8 py-3 rounded-lg">
             {/* Error Message  */}
             {error.length > 0 ? (
               <div className="w-fit h-max mx-auto mb-3 px-4 py-2 rounded-md bg-red-500 outline outline-red-300 flex flex-row flex-nowrap">
@@ -145,7 +145,7 @@ export function SignUpPage() {
             {inputChain[chainIndex]}
             {chainIndex < inputChain.length - 1 ? (
               <button
-                className="mt-4 py-1 px-4 bg-blue-400 text-white h-full rounded-sm"
+                className="mt-4 py-1 px-4 bg-blue-400 text-white h-fit rounded-sm"
                 onClick={() => {
                   if (checkForErrors()) setChainIndex(chainIndex + 1);
                 }}
@@ -154,7 +154,7 @@ export function SignUpPage() {
               </button>
             ) : (
               <button
-                className="my-3 py-1 px-4 bg-blue-400 text-white h-full rounded-sm"
+                className="my-3 py-1 px-4 bg-blue-400 text-white h-fit rounded-sm"
                 onClick={handleSubmit}
                 type="submit"
               >
