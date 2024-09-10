@@ -11,20 +11,17 @@ export function Card({ topic, content, deleteFunction, updateFunction }) {
     <div className="w-max h-max mainContainer mx-5 my-14">
       <div
         className={"w-80 h-96" + (toggle ? " showingBack" : " showingFront")}
+        onClick={() => {
+          setToggle(!toggle);
+        }}
       >
         <Front
           topic={topic}
-          toggleFunction={() => {
-            setToggle(!toggle);
-          }}
           deleteFunction={deleteFunction}
           updateFunction={updateFunction}
         />
         <Back
           content={content}
-          toggleFunction={() => {
-            setToggle(!toggle);
-          }}
           deleteFunction={deleteFunction}
           updateFunction={updateFunction}
         />
