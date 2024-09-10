@@ -35,7 +35,7 @@ export function EditMenu({
   var topic = defaultTopic;
   var content = defaultContent;
   return (
-    <div className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-fit min-h-96 p-3 rounded-lg border-2 border-black relative overflow-hidden">
+    <div className="bg-slate-200 flex flex-col mx-5 my-14 w-80 h-fit min-h-96 p-3 rounded-lg border-2 border-black relative overflow-hidden">
       <div className="text-5xl h-7 w-full self-center flex z-30">
         <p className="grow text-2xl">Editing Card</p>
         <button
@@ -101,7 +101,7 @@ export function NewCardMenu({ createFunction, closeFunction }) {
   }
 
   return (
-    <div className="bg-slate-300 rounded-lg border-2 border-black w-fit h-fit min-h-96 my-14 p-3 flex flex-col relative">
+    <div className="bg-slate-200 rounded-lg border-2 border-black w-fit h-fit min-h-96 my-14 p-3 flex flex-col relative">
       {/*  ~ ~ ~ ~ ~ ~ ~ ~ ~ Beginning of Header Buttons ~ ~ ~ ~ ~ ~ ~ ~ ~ */}
       <div className="text-5xl h-7 w-full self-center flex z-30">
         <p className="grow text-2xl">New Card</p>
@@ -178,7 +178,7 @@ export function NewCardMenu({ createFunction, closeFunction }) {
 
 export function DeleteMenu({ deleteFunction, closeFunction }) {
   return (
-    <div className="bg-slate-300 flex flex-col mx-5 my-14 w-80 h-fit p-3 rounded-lg border-2 border-black relative overflow-hidden">
+    <div className="bg-slate-200 flex flex-col mx-5 my-14 w-80 h-fit p-3 rounded-lg border-2 border-black relative overflow-hidden">
       <div className="text-5xl h-7 w-full self-center flex z-30">
         <p className="grow text-2xl">Deleting Card</p>
         <button
@@ -204,3 +204,27 @@ export function DeleteMenu({ deleteFunction, closeFunction }) {
     </div>
   );
 } //end of delete menu
+
+export function PageSettings({ closeFunction, deleteFunction }) {
+  return (
+    <div className="bg-gray-200 flex flex-col w-80 h-96 my-14 p-3 rounded-lg border-2 border-gray-400">
+      <div className="text-5xl h-7 w-full self-center flex z-30">
+        <p className="grow text-2xl">Deck Settings</p>
+        <button
+          onClick={async () => {
+            closeFunction();
+          }}
+          className="text-white text-xl w-fit px-1 rounded bg-red-600"
+        >
+          Close
+        </button>
+      </div>
+      <button
+        className="text-4xl m-auto p-3 rounded-md bg-red-500 text-white"
+        onClick={deleteFunction}
+      >
+        Delete Deck
+      </button>
+    </div>
+  );
+}

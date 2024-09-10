@@ -4,7 +4,12 @@ import ReactDOM from "react-dom";
 import { useState } from "react";
 import { Navbar } from "../components/Navbar.jsx";
 import { Card } from "../components/Card.jsx";
-import { EditMenu, DeleteMenu, NewCardMenu } from "../components/Menus.jsx";
+import {
+  EditMenu,
+  DeleteMenu,
+  NewCardMenu,
+  PageSettings,
+} from "../components/Menus.jsx";
 import {
   CreateButton,
   newContent,
@@ -156,6 +161,31 @@ export function DeckPage() {
     setToggle(true);
   }; //end of updates card
 
+  async function openSettings() {
+    setModalContent(
+      <PageSettings
+        closeFunction={() => {
+          setToggle(false);
+        }}
+        deleteFunction={async () => {
+          const ref = doc(db, temp.currentUser.email, "decks");
+          const data = (await getDoc(ref)).data().all_names;
+          const index = data.indexOf(deckValues.currentDeck);
+          const length = deckValues.currentDeck.length;
+          var half_one = data.substring(0, index - 1);
+          half_one += index != 0 && index != data.length - length ? "," : "";
+          var half_two = data.substring(index + length + 1, data.length);
+          setDoc(ref, { all_names: half_one + half_two });
+          navigate("/");
+          console.log(half_one);
+          console.log(half_two);
+          console.log("\n" + half_one + half_two);
+        }}
+      />
+    );
+    setToggle(!toggle);
+  } //end of open settings
+
   window.addEventListener("resize", () => {
     setContainerWidth(window.innerWidth - (window.innerWidth % 360) + "px");
   });
@@ -168,7 +198,12 @@ export function DeckPage() {
         <h1 className="text-gray-700 text-5xl portrait:text-3xl grow">
           {deckValues.currentDeck}
         </h1>
-        <button className="w-10 h-10 bg-slate-700 rounded-xl self-center">
+        <button
+          className="w-10 h-10 bg-slate-700 rounded-xl self-center"
+          onClick={() => {
+            openSettings();
+          }}
+        >
           <img src={settings_icon} className="w-8 p-1 m-auto" />
         </button>
         <button
