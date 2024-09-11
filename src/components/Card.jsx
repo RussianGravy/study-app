@@ -12,16 +12,22 @@ export function Card({ topic, content, deleteFunction, updateFunction }) {
       <div
         className={"w-80 h-96" + (toggle ? " showingBack" : " showingFront")}
         onClick={() => {
-          setToggle(!toggle);
+          // setToggle(!toggle);
         }}
       >
         <Front
           topic={topic}
+          toggleFunction={() => {
+            setToggle(!toggle);
+          }}
           deleteFunction={deleteFunction}
           updateFunction={updateFunction}
         />
         <Back
           content={content}
+          toggleFunction={() => {
+            setToggle(!toggle);
+          }}
           deleteFunction={deleteFunction}
           updateFunction={updateFunction}
         />
@@ -40,7 +46,7 @@ function Front({
 }) {
   return (
     <div
-      className="bg-blue-300 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col front"
+      className="bg-blue-300 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col front relative"
       draggable
     >
       <div className="text-5xl h-7 w-full self-center flex flex-row-reverse z-30 center">
@@ -63,7 +69,12 @@ function Front({
           <img src={flip_icon} className="w-full" />
         </button>
       </div>
-      <h1 className=" text-4xl text-center mx-auto my-14">{topic}</h1>
+      <div
+        className="w-full h-full p-3 text-4xl text-center absolute top-0 left-0"
+        onClick={toggleFunction}
+      >
+        <h1 className="mx-auto my-14">{topic}</h1>
+      </div>
     </div>
   );
 }
@@ -77,7 +88,7 @@ function Back({
 }) {
   return (
     <div
-      className="bg-blue-300 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col back"
+      className="bg-blue-300 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col back relative"
       draggable
     >
       <div className="text-5xl h-7 w-full self-center flex flex-row-reverse z-30 center">
@@ -100,9 +111,12 @@ function Back({
           <img src={flip_icon} className="w-full" />
         </button>
       </div>
-      <p className=" text-2xl text-black text-center mx-auto my-14 ">
-        {content}
-      </p>
+      <div
+        className="w-full h-full p-3 text-2xl text-center absolute top-0 left-0"
+        onClick={toggleFunction}
+      >
+        <h1 className="mx-auto my-16">{content}</h1>
+      </div>
     </div>
   );
 }
