@@ -46,7 +46,7 @@ function Front({
 }) {
   return (
     <div
-      className="bg-blue-300 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col front relative"
+      className="bg-blue-400 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col front relative"
       draggable
     >
       <div className="text-5xl h-7 w-full self-center flex flex-row-reverse z-30 center">
@@ -88,7 +88,7 @@ function Back({
 }) {
   return (
     <div
-      className="bg-blue-300 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col back relative"
+      className="bg-blue-400 rounded-lg border-2 border-black w-full h-full p-3 flex flex-col back relative"
       draggable
     >
       <div className="text-5xl h-7 w-full self-center flex flex-row-reverse z-30 center">
