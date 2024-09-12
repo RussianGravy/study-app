@@ -1,7 +1,7 @@
 # Social Study App
 ## About
 
-This app stores flash cards for studying. 
+This app stores flash cards for studying. <br>
 [Try it here!](https://study-app-seven.vercel.app/login)
 
 - Authentication and storage are achieved through Firebase.
