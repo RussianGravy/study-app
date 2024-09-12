@@ -28,7 +28,7 @@ export function DeckDisplay({ decks, show_name }) {
 
   function selectDeck(name) {
     deckValues.changeDeck(name);
-    navigate("/deck");
+    navigate("/deck/" + temp.currentUser.email + "/" + name);
   }
 
   return (
