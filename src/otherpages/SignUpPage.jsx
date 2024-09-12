@@ -5,6 +5,7 @@ import { useState } from "react";
 import { auth, googleProvider } from "../config/firebase.js";
 import { useAuth } from "../contexts/AuthContext.js";
 import background from "../assets/background.png";
+import main_logo_icon from "../assets/main_logo_icon.png";
 
 export function SignUpPage() {
   //states and variables
@@ -71,11 +72,17 @@ export function SignUpPage() {
         }}
       />
     </div>,
-    <div className="flex flex-col">
-      <h1 className="m-auto my-2 text-gray-800 text-2xl underline">Review</h1>
-      <h1 className="my-3 text-gray-600 text-2xl">Username: {username}</h1>
-      <h1 className="my-3 text-gray-600 text-2xl">Email: {email}</h1>
-      <h1 className="my-3 text-gray-600 text-2xl">Password: {password}</h1>
+    <div className="flex flex-col text-center">
+      <div className="m-auto my-2 text-gray-800 text-2xl underline">Review</div>
+      <div className="my-3 text-gray-600 text-1xl">
+        Username: <h1 className="text-2xl">{username}</h1>
+      </div>
+      <div className="my-3 text-gray-600 text-1xl">
+        Email: <h1 className="text-2xl"> {email}</h1>
+      </div>
+      <div className="my-3 text-gray-600 text-1xl">
+        Password:<h1 className="text-2xl">{password}</h1>{" "}
+      </div>
     </div>,
   ]; //end of input chain
 
@@ -115,6 +122,15 @@ export function SignUpPage() {
 
   return (
     <div className="w-screen h-screen flex">
+      <div className="w-screen h-14 flex flex-row bg-transparent fixed z-40">
+        <div className="flex grow items-center p-0">
+          <img src={main_logo_icon} className="w-10 ml-5 aspect-auto" />
+          <h1 className="text-2xl ml-2 portrait:text-xl items-center font-serif">
+            Social Studies
+          </h1>
+        </div>
+      </div>
+      {/* beginning of page */}
       <img
         src={background}
         className="w-full h-full fixed top-0 left-0 -z-10 opacity-20"

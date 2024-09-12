@@ -7,6 +7,7 @@ import { Navbar } from "../components/Navbar.jsx";
 import Auth from "../components/Auth.jsx";
 import styles from "../components/custom_css/global.module.css";
 import background from "../assets/background.png";
+import main_logo_icon from "../assets/main_logo_icon.png";
 
 export function LoginPage() {
   const [error, setError] = useState("");
@@ -18,7 +19,15 @@ export function LoginPage() {
   }, []);
   return (
     <div className="relative flex flex-row w-screen h-screen p-0 m-0 overflow-hidden">
-      {/* <Navbar /> */}
+      <div className="w-screen h-14 flex flex-row bg-transparent fixed z-40">
+        <div className="flex grow items-center p-0">
+          <img src={main_logo_icon} className="w-10 ml-5 aspect-auto" />
+          <h1 className="text-2xl ml-2 portrait:text-xl items-center font-serif">
+            Social Studies
+          </h1>
+        </div>
+      </div>
+      {/* beginning of page */}
       <img
         src={background}
         className="w-full h-full fixed top-0 left-0 -z-10 opacity-20"
