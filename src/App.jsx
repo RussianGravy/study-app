@@ -31,7 +31,7 @@ function App() {
                 />
                 <Route
                   exact
-                  path="/deck"
+                  path="/deck/:user/:deck"
                   element={<PrivateRoute Component={DeckPage} />}
                 />
                 <Route

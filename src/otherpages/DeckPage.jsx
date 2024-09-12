@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ReactDOM from "react-dom";
 import { useState } from "react";
 import { Navbar } from "../components/Navbar.jsx";
@@ -10,11 +10,7 @@ import {
   NewCardMenu,
   PageSettings,
 } from "../components/Menus.jsx";
-import {
-  CreateButton,
-  newContent,
-  newTopic,
-} from "../components/CreateButton.jsx";
+import { CreateButton } from "../components/CreateButton.jsx";
 import { auth, googleProvider, db } from "../config/firebase.js";
 import {
   getDoc,
@@ -39,15 +35,10 @@ export function DeckPage() {
   ); // width for cards div
   const [toggle, setToggle] = useState(false); //modal toggle
   const [modalContent, setModalContent] = useState(<></>);
-  const [defaultValues, setDefaultValues] = useState({
-    topic: null,
-    content: null,
-  }); //values for updateCard modal
+  const { user, deck } = useParams();
   const temp = useAuth();
-  const deckValues = useDeck();
   const navigate = useNavigate();
-  var collectionPath =
-    temp.currentUser.email + "/decks/" + deckValues.currentDeck;
+  var collectionPath = user + "/decks/" + deck;
   const cardsCollectionsRef = getCollection();
 
   useEffect(() => {
@@ -58,10 +49,9 @@ export function DeckPage() {
   }, []); // homepage body styling
 
   useEffect(() => {
-    if (deckValues.currentDeck === "") navigate("/");
+    if (deck === "") navigate("/");
     else {
-      collectionPath =
-        temp.currentUser.email + "/decks/" + deckValues.currentDeck;
+      collectionPath = user + "/decks/" + deck;
       getCardList();
     }
   }, []); // check for currentDeck, redirect if none
@@ -164,14 +154,15 @@ export function DeckPage() {
   async function openSettings() {
     setModalContent(
       <PageSettings
+        deckName={deck}
         closeFunction={() => {
           setToggle(false);
         }}
         deleteFunction={async () => {
-          const ref = doc(db, temp.currentUser.email, "decks");
+          const ref = doc(db, user, "decks");
           const data = (await getDoc(ref)).data().all_names;
-          const index = data.indexOf(deckValues.currentDeck);
-          const length = deckValues.currentDeck.length;
+          const index = data.indexOf(deck);
+          const length = deck.length;
           var half_one = data.substring(0, index - 1);
           half_one += index != 0 && index != data.length - length ? "," : "";
           var half_two = data.substring(index + length + 1, data.length);
@@ -196,16 +187,20 @@ export function DeckPage() {
       <CreateButton submitFunction={submitCard} />
       <div className="pt-20 w-11/12 flex flex-nowrap mx-auto">
         <h1 className="text-gray-700 text-5xl portrait:text-3xl grow">
-          {deckValues.currentDeck}
+          {deck}
         </h1>
-        <button
-          className="w-10 h-10 bg-slate-700 rounded-xl self-center"
-          onClick={() => {
-            openSettings();
-          }}
-        >
-          <img src={settings_icon} className="w-8 p-1 m-auto" />
-        </button>
+        {user === temp.currentUser.email ? (
+          <button
+            className="w-10 h-10 bg-slate-700 rounded-xl self-center"
+            onClick={() => {
+              openSettings();
+            }}
+          >
+            <img src={settings_icon} className="w-8 p-1 m-auto" />
+          </button>
+        ) : (
+          ""
+        )}
         <button
           className="w-fit h-10 m-2 px-2 bg-slate-700 text-white font-bold rounded-xl self-center"
           onClick={() => {
@@ -237,7 +232,8 @@ export function DeckPage() {
                 updateFunction={() => {
                   updateCard(card.id);
                 }}
-              ></Card>
+                mutable={user === temp.currentUser.email}
+              />
             );
           })
         )}
