@@ -20,7 +20,7 @@ export function SignUpPage() {
 
   // input chain and supporting functions
   const inputChain = [
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-auto ">
       <h2 className="text-gray-600">Username:</h2>
       <input
         className="my-3 px-1 outline rounded-sm"
@@ -33,7 +33,7 @@ export function SignUpPage() {
         }}
       />
     </div>,
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-auto">
       <h2 className="text-gray-600">Email:</h2>
       <input
         className="my-3 px-1 outline rounded-sm"
@@ -46,7 +46,7 @@ export function SignUpPage() {
         }}
       />
     </div>,
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-auto">
       <h2 className="text-gray-600">Password:</h2>
       <input
         className="my-3 px-1 outline rounded-sm"
