@@ -25,8 +25,9 @@ export function AuthProvider({ children }) {
   }
 
   async function signUp(user_name, email, password) {
-    createUserWithEmailAndPassword(auth, email, password);
     try {
+      //sign up user
+      await createUserWithEmailAndPassword(auth, email, password);
       //store username
       var ref = await doc(db, email, "username");
       setDoc(ref, { username: user_name });
@@ -34,8 +35,10 @@ export function AuthProvider({ children }) {
       var docRef = await doc(db, "global_data", "users");
       updateDoc(docRef, { [user_name]: email });
     } catch (err) {
-      console.error(err);
+      // console.error(err);
+      throw err;
     }
+    return "mad it"; //test
   }
 
   function logOut() {

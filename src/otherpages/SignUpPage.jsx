@@ -20,7 +20,7 @@ export function SignUpPage() {
 
   // input chain and supporting functions
   const inputChain = [
-    <div className="flex flex-col mt-auto ">
+    <div className="flex flex-col">
       <h2 className="text-gray-600">Username:</h2>
       <input
         className="my-3 px-1 outline rounded-sm"
@@ -33,7 +33,7 @@ export function SignUpPage() {
         }}
       />
     </div>,
-    <div className="flex flex-col mt-auto">
+    <div className="flex flex-col">
       <h2 className="text-gray-600">Email:</h2>
       <input
         className="my-3 px-1 outline rounded-sm"
@@ -46,7 +46,7 @@ export function SignUpPage() {
         }}
       />
     </div>,
-    <div className="flex flex-col mt-auto">
+    <div className="flex flex-col">
       <h2 className="text-gray-600">Password:</h2>
       <input
         className="my-3 px-1 outline rounded-sm"
@@ -80,9 +80,6 @@ export function SignUpPage() {
       <div className="my-3 text-gray-600 text-1xl">
         Email: <h1 className="text-2xl"> {email}</h1>
       </div>
-      <div className="my-3 text-gray-600 text-1xl">
-        Password:<h1 className="text-2xl">{password}</h1>{" "}
-      </div>
     </div>,
   ]; //end of input chain
 
@@ -99,8 +96,8 @@ export function SignUpPage() {
       setError("Not a valid email.");
       return false;
     }
-    if (password.length == 0 && chainIndex == 2) {
-      setError("Empty password.");
+    if (password.length < 6 && chainIndex == 2) {
+      setError("Password is too short.");
       return false;
     }
     if (password != passwordConfirm) {
@@ -113,11 +110,16 @@ export function SignUpPage() {
 
   async function handleSubmit() {
     try {
-      await temp.signUp(username, email, password);
-      navigate("/");
+      var test = await temp.signUp(username, email, password);
+      console.log(test);
+      if (test === "errer") {
+        throw new Error(test);
+      }
     } catch (err) {
-      console.error(err);
+      setError("Failed to Sign Up");
+      return;
     }
+    navigate("/");
   }
 
   return (
