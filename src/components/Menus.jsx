@@ -205,9 +205,9 @@ export function DeleteMenu({ deleteFunction, closeFunction }) {
   );
 } //end of delete menu
 
-export function PageSettings({ closeFunction, deleteFunction }) {
+export function PageSettings({ deckName, closeFunction, deleteFunction }) {
   return (
-    <div className="bg-gray-200 flex flex-col w-80 h-96 my-14 p-3 rounded-lg border-2 border-gray-400">
+    <div className="bg-gray-200 flex flex-col w-96 h-96 my-14 p-3 rounded-lg border-2 border-gray-400">
       <div className="text-5xl h-7 w-full self-center flex z-30">
         <p className="grow text-2xl">Deck Settings</p>
         <button
@@ -219,8 +219,10 @@ export function PageSettings({ closeFunction, deleteFunction }) {
           Close
         </button>
       </div>
+      {/* end of header */}
+      <h1 className="mt-10 mx-auto text-2xl underline">{deckName}</h1>
       <button
-        className="text-4xl m-auto p-3 rounded-md bg-red-500 text-white"
+        className="text-1xl mx-auto p-3 rounded-md bg-red-500 text-white"
         onClick={deleteFunction}
       >
         Delete Deck

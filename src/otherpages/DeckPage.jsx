@@ -16,7 +16,6 @@ import {
   getDoc,
   getDocs,
   collection,
-  addDoc,
   setDoc,
   deleteDoc,
   updateDoc,
@@ -24,14 +23,13 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "../contexts/AuthContext.js";
 import { Modal } from "../components/Modal.jsx";
-import { useDeck } from "../contexts/DeckContext.js";
 import styles from "../components/custom_css/global.module.css";
 import settings_icon from "../assets/settings_icon.png";
 
 export function DeckPage() {
   const [cardList, setCardList] = useState([]);
   const [containerWidth, setContainerWidth] = useState(
-    window.innerWidth - (window.innerWidth % 360) + "px"
+    window.innerWidth - (window.innerWidth % 360) + "px",
   ); // width for cards div
   const [toggle, setToggle] = useState(false); //modal toggle
   const [modalContent, setModalContent] = useState(<></>);
@@ -39,7 +37,16 @@ export function DeckPage() {
   const temp = useAuth();
   const navigate = useNavigate();
   var collectionPath = user + "/decks/" + deck;
+  var metaDataPath = user + "/decks/" + deck + "/meta_data";
   const cardsCollectionsRef = getCollection();
+
+  useEffect(() => {
+    updateLastAccessed();
+  }, []);
+
+  useEffect(() => {
+    getCardList();
+  }, [toggle]);
 
   useEffect(() => {
     document.body.className = styles.homeBody;
@@ -56,6 +63,11 @@ export function DeckPage() {
     }
   }, []); // check for currentDeck, redirect if none
 
+  function updateLastAccessed() {
+    const ref = doc(db, metaDataPath);
+    updateDoc(ref, { last_accessed: Date.now() });
+  }
+
   function getCollection() {
     try {
       const col = collection(db, collectionPath);
@@ -68,8 +80,10 @@ export function DeckPage() {
   const getCardList = async () => {
     // Read the data
     try {
-      const data = await getDocs(cardsCollectionsRef);
-      const filteredData = data.docs.map((doc) => ({
+      const docs = (await getDocs(cardsCollectionsRef)).docs.filter(
+        (d) => d.id != "meta_data",
+      );
+      const filteredData = docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
@@ -79,10 +93,6 @@ export function DeckPage() {
     }
     // Set card list
   };
-
-  useEffect(() => {
-    getCardList();
-  }, [toggle]);
 
   const submitCard = async () => {
     setModalContent(
@@ -104,7 +114,7 @@ export function DeckPage() {
           });
           setToggle(false);
         }}
-      />
+      />,
     );
     await setToggle(true);
   }; //end of submit card
@@ -126,7 +136,7 @@ export function DeckPage() {
         closeFunction={() => {
           setToggle(false);
         }}
-      />
+      />,
     );
     await setToggle(true);
   }; //end of delete card
@@ -146,7 +156,7 @@ export function DeckPage() {
         closeFunction={() => {
           setToggle(false);
         }}
-      />
+      />,
     );
     setToggle(true);
   }; //end of updates card
@@ -159,6 +169,7 @@ export function DeckPage() {
           setToggle(false);
         }}
         deleteFunction={async () => {
+          //remove deck's name from list
           const ref = doc(db, user, "decks");
           const data = (await getDoc(ref)).data().all_names;
           const index = data.indexOf(deck);
@@ -167,12 +178,14 @@ export function DeckPage() {
           half_one += index != 0 && index != data.length - length ? "," : "";
           var half_two = data.substring(index + length + 1, data.length);
           setDoc(ref, { all_names: half_one + half_two });
+          //actually delete collection
+          //navigate back to homescreen
           navigate("/");
           console.log(half_one);
           console.log(half_two);
           console.log("\n" + half_one + half_two);
         }}
-      />
+      />,
     );
     setToggle(!toggle);
   } //end of open settings

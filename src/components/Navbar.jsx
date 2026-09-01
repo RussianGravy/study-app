@@ -23,7 +23,6 @@ export function Navbar({ currentPage }) {
       const ref = doc(db, temp.currentUser.email, "username");
       const data = (await getDoc(ref)).data().username;
       setUsername(data);
-      console.log(username);
     } catch (err) {
       console.error(err);
       setUsername("error getting name...");
@@ -76,7 +75,7 @@ export function Navbar({ currentPage }) {
               onClick={() => {
                 window.open(
                   "https://github.com/RussianGravy/study-app",
-                  "_blank"
+                  "_blank",
                 );
               }}
               className="hover:bg-blue-500 text-black text-lg portrait:text-lg py-3 mt-1 w-32"

@@ -6,27 +6,21 @@ import { CreateButton } from "../components/CreateButton.jsx";
 import { Deck } from "../components/Deck";
 import { DeckDisplay } from "../components/DeckDisplay.jsx";
 import { FriendDisplay } from "../components/FriendDisplay.jsx";
-import {
-  collection,
-  doc,
-  getDocs,
-  getDoc,
-  setDoc,
-  deleteDoc,
-} from "firebase/firestore";
-import { auth, googleProvider, db } from "../config/firebase.js";
+import { collection, doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
+import { db } from "../config/firebase.js";
 import { useAuth } from "../contexts/AuthContext";
 import { useDeck } from "../contexts/DeckContext.js";
 import backgroundImage from "../assets/background.png";
 import styles from "../components/custom_css/global.module.css";
 
 export function HomePage() {
-  const [decks, setDecks] = useState("");
+  const [decks, setDecks] = useState([]);
   const [newDeckName, setNewDeckName] = useState("");
   const [modalToggle, setModalToggle] = useState(false);
   const navigate = useNavigate();
   const temp = useAuth();
   const deckValues = useDeck();
+  const [deckMetaData, setDeckMetaData] = useState([]); // metadata such as last_accessed
 
   const decksDocRef = getDocRef(); //reference (not doc itself)
 
@@ -54,10 +48,41 @@ export function HomePage() {
 
   async function getDeckList() {
     try {
-      var tempDecks = (await getDoc(decksDocRef)).data().all_names;
+      var all_names = (await getDoc(decksDocRef)).data().all_names.split(",");
+      const compareTimeStamps = (a, b) => {
+        return b - a;
+      };
+
+      const tempDecks = await Promise.all(
+        all_names.map(async (n) => {
+          return { name: n, ...(await getDeckMetaData(n)) };
+        }),
+      );
+
+      tempDecks.sort((a, b) => {
+        return compareTimeStamps(a.last_accessed, b.last_accessed);
+      });
+
       setDecks(tempDecks);
     } catch (err) {
       console.error(err);
+    }
+  }
+
+  /*
+   * queries for metadata association with the deck in the argument
+   * if exists, return it, else set meta_data with default data and return that
+   */
+  async function getDeckMetaData(deck) {
+    const defaultMetaData = { last_accessed: null };
+    const ref = doc(db, temp.currentUser.email + "/decks/" + deck, "meta_data");
+    const metaData = await getDoc(ref);
+
+    if (metaData.exists()) {
+      return metaData.data();
+    } else {
+      setDoc(ref, defaultMetaData);
+      return defaultMetaData;
     }
   }
 
@@ -144,7 +169,7 @@ export function HomePage() {
       <div className="pt-20 pb-20 w-screen h-fit flex flex-row flex-wrap">
         {/* pb-20 */}
         {/* <UserDisplay /> */}
-        <DeckDisplay decks={decks} show_name={true} />
+        <DeckDisplay decks={decks.map((d) => d.name)} show_name={true} />
         <FriendDisplay />
       </div>
     </div>

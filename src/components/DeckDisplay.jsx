@@ -43,7 +43,7 @@ export function DeckDisplay({ decks, show_name }) {
       )}
       <div className="w-full h-max pl-8 portrait:pl-2 flex flex-row flex-nowrap overflow-x-scroll snap-x snap-mandatory">
         {decks.length > 0 ? (
-          decks.split(",").map((name) => {
+          decks.map((name) => {
             return (
               // Add SNAP Effect to deck scrolling
               <section
@@ -66,7 +66,7 @@ export function DeckDisplay({ decks, show_name }) {
           </h2>
         )}
       </div>
-      {decks.split(",").length > 1 ? (
+      {decks.length > 1 ? (
         <div className="absolute top-0 right-0 h-full w-8 portrait:w-6 rounded-lg from-transparent to-gray-500 bg-gradient-to-r"></div>
       ) : (
         ""
