@@ -2,7 +2,7 @@
 ## About
 
 This app stores flash cards for studying. <br>
-[Try it here!](https://study-app-seven.vercel.app/login)
+[Try it here!](https://study-app-seven.vercel.app/landing)
 
 - Authentication and storage are achieved through Firebase.
 - Front end is made using React.
