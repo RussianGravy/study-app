@@ -15,6 +15,7 @@ import styles from "../components/custom_css/global.module.css";
 
 export function HomePage() {
   const [decks, setDecks] = useState([]);
+  const [rawDecksString, setRawDecksString] = useState("");
   const [newDeckName, setNewDeckName] = useState("");
   const [modalToggle, setModalToggle] = useState(false);
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ export function HomePage() {
   async function getDeckList() {
     try {
       var all_names = (await getDoc(decksDocRef)).data().all_names.split(",");
+      setRawDecksString(all_names);
       const compareTimeStamps = (a, b) => {
         return b - a;
       };
@@ -81,33 +83,29 @@ export function HomePage() {
     if (metaData.exists()) {
       return metaData.data();
     } else {
-      setDoc(ref, defaultMetaData);
       return defaultMetaData;
     }
   }
 
-  function createDeck(name) {
-    if (!decks.includes(name)) {
+  async function createDeck(name) {
+    if (!decks.some((d) => d.name === name)) {
       const colRef = collection(db, temp.currentUser.email + "/decks/" + name);
-      const docRef = doc(colRef, "metadata"); // You can name this document anything you want
-      setDoc(docRef, {
-        createdAt: new Date(),
-        name: name,
-      })
-        .then(() => {
-          getDeckList(); // Refresh deck list
-        })
-        .catch((err) => {
-          console.error("Error creating deck: ", err);
-        });
-      deleteDoc(docRef);
+      const docRef = doc(colRef, "meta_data"); // You can name this document anything you want
+      const meta_data = {
+        last_accessed: Date.now(),
+      };
+      try {
+        await setDoc(docRef, meta_data);
+      } catch (err) {
+        console.error("Error creating deck: ", err);
+      }
       var newString;
       if (decks.length > 0) {
-        newString = decks + ", " + name;
+        newString = rawDecksString + "," + name;
       } else {
         newString = name;
       }
-      setDoc(decksDocRef, { all_names: newString });
+      setDoc(decksDocRef, { all_names: newString }).then(() => getDeckList());
     }
     setModalToggle(false);
   }
