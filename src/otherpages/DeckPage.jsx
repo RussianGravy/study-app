@@ -25,6 +25,7 @@ import { useAuth } from "../contexts/AuthContext.js";
 import { Modal } from "../components/Modal.jsx";
 import styles from "../components/custom_css/global.module.css";
 import settings_icon from "../assets/settings_icon.png";
+import StudyFeature from "../components/StudyFeature.jsx";
 
 export function DeckPage() {
   const [cardList, setCardList] = useState([]);
@@ -202,6 +203,23 @@ export function DeckPage() {
         <h1 className="text-gray-700 text-5xl portrait:text-3xl grow">
           {deck}
         </h1>
+        <button
+          className="w-fit h-10 m-2 px-2 bg-blue-600 text-white font-bold rounded-xl self-center"
+          onClick={() => {
+            setToggle(true);
+            setModalContent(
+              <StudyFeature
+                cards={cardList}
+                onClose={() => {
+                  setModalContent(null);
+                  setToggle(false);
+                }}
+              />,
+            );
+          }}
+        >
+          Study
+        </button>
         {user === temp.currentUser.email ? (
           <button
             className="w-10 h-10 bg-slate-700 rounded-xl self-center"
